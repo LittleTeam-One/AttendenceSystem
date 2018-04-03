@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Light.NoActionBar" />
+        <activity android:name=".ForgetPwdActivity" />
+        <activity android:name=".ResetPwdActivity"></activity>
     </application>
 
 </manifest>

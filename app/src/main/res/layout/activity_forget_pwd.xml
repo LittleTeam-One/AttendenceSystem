@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.mrc.attendencesystem.ForgetPwdActivity">
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="26dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_border_radius_3dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="16.85dp"
+            android:layout_height="12.1dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="18dp"
+            android:src="@mipmap/ic_email" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="9dp"
+            android:background="@color/line_light_blue_color" />
+
+        <EditText
+            android:id="@+id/register_email_editText"
+            android:layout_width="215dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:hint="@string/register_email"
+            android:textColor="@color/font_color_light_blue"
+            android:textSize="@dimen/font_size_15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="148dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rectangle_border_radius_4dp">
+            <EditText
+                android:id="@+id/register_email_ic_editText"
+                android:layout_width="148dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@null"
+                android:hint="@string/email_identifying_code"
+                android:textColor="@color/font_color_light_blue"
+                android:textSize="@dimen/font_size_15sp" />
+        </LinearLayout>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/forget_send_ic_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/rectangle_button_style"
+            android:text="@string/send_identifying_code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_16sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/next"
+        android:layout_width="296dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="71dp"
+        android:background="@drawable/rectangle_button_style"
+        android:text="@string/next"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_17sp"/>
+</LinearLayout>

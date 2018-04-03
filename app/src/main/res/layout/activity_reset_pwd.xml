@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.example.mrc.attendencesystem.ResetPwdActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/rectangle_border_radius_3dp">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="15.75dp"
+                android:layout_height="20.2dp"
+                android:layout_marginBottom="13.5dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="12dp"
+                android:src="@mipmap/ic_psw" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20.25dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/line_light_blue_color" />
+
+            <EditText
+                android:id="@+id/reset_pwd_edit"
+                android:layout_width="222dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:hint="@string/new_password"
+                android:textColor="@color/font_color_light_blue"
+                android:textSize="@dimen/font_size_15sp"
+                android:inputType="textPassword"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rectangle_border_radius_3dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="15.75dp"
+                android:layout_height="20.2dp"
+                android:layout_marginBottom="13.5dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="13dp"
+                android:src="@mipmap/ic_psw" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20.25dp"
+                android:layout_marginTop="9dp"
+                android:background="@color/line_light_blue_color" />
+
+            <EditText
+                android:id="@+id/reset_pwd_edit_again"
+                android:layout_width="222dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:hint="@string/new_password_again"
+                android:inputType="textPassword"
+                android:textColor="@color/font_color_light_blue"
+                android:textSize="@dimen/font_size_15sp" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/finish_btn"
+            android:layout_width="296dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="71dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/font_size_17sp"
+            android:background="@drawable/rectangle_button_style"
+            android:text="@string/finished"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</ScrollView>

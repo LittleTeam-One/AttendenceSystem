@@ -3,4 +3,23 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="bar_dark_blue_color">#FF556995</color>
+    <color name="bar_light_blue_color">#FF5A7BC0</color>
+    <color name="font_color_light_black">#FF333333</color>
+    <color name="line_light_blue_color">#FFE5E5E5</color>
+    <color name="font_color_light_blue">#FFA0A0A0</color>
+    <color name="font_color_more_light_black">#FF373737</color>
+    <color name="widget_dark_blue_color">#FF556A96</color>
+    <color name="statusBar_color">#455a88</color>
+    <color name="button_clicked_color">#BDBDBD</color>
+
+
+    <dimen name="font_size_18sp">18sp</dimen>
+    <dimen name="font_size_17sp">17sp</dimen>
+    <dimen name="font_size_16sp">16sp</dimen>
+    <dimen name="font_size_15sp">15sp</dimen>
+    <dimen name="font_size_14sp">14sp</dimen>
+    <dimen name="font_size_12sp">12sp</dimen>
+    <dimen name="font_size_11sp">11sp</dimen>
 </resources>
