@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">AttendenceSystem</string>
+    <string name="app_name">基于定位的考勤系统</string>
+    <string name="full_name">基于定位的考勤系统</string>
+    <string name="please_input_username">请输入您的用户名</string>
+    <string name="please_input_password">请输入您的密码</string>
+    <string name="login">登录</string>
+    <string name="start_to_register">开始注册</string>
+    <string name="forget_the_password">忘记密码</string>
+    <string name="please_input_ic">请输入验证码</string>
+    <string name="username_can_not_be_null">用户名不能为空</string>
+    <string name="password_can_not_be_null">密码不能为空</string>
+    <string name="email_can_not_be_null">邮箱不能为空</string>
+    <string name="email_ic_can_not_be_null">验证码不能为空</string>
+    <string name="password_again_can_not_be_null">确认密码不能为空</string>
+    <string name="email_ic_is_not_correct">验证码错误</string>
+    <string name="password_again_is_not_equal_to_password">两次输入密码不统一</string>
+    <string name="please_input_the_correct_email">请输入正确的邮箱</string>
+    <string name="app_version">版本号: %1$s</string>
+    <string name="register_email">请输入您的邮箱</string>
+    <string name="next">下一步</string>
+    <string name="email_identifying_code">邮箱验证码</string>
+    <string name="send_identifying_code">发送验证码</string>
+    <string name="second_can_send_again">秒后可重新发送</string>
+    <string name="get_id_code_again">重新获取验证码</string>
+    <string name="new_password">输入新密码</string>
+    <string name="new_password_again">请再次输入新密码</string>
+    <string name="finished">完成</string>
+    <string name="email_is_not_registered">该邮箱尚未注册</string>
+    <string name="password_reset_succeed">密码找回成功</string>
 </resources>

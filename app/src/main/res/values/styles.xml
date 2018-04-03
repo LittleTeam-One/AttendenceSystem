@@ -3,9 +3,28 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/statusBar_color</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarStyle">@style/toolbar</item>
+    </style>
+
+    //actionbar的样式
+    <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/bar_background_style</item>
+    </style>
+
+    //toolbar的样式
+    <style name="toolbar" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="background">@drawable/bar_background_style</item>
+    </style>
+
+    <style name="Light.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/statusBar_color</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="toolbarStyle">@style/toolbar</item>
     </style>
 
 </resources>
