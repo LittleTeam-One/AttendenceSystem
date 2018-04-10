@@ -1,10 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "2504779eded36"
+    appSecret "d6e7a90120baf11fc3a7031de977c8e9"
 
+    SMSSDK {gui false}
+}
 android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.mrc.attendencesystem"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"

@@ -3,6 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="black">#000000</color>
+    <color name="light_gray_color">#E0E0E0</color>
+    <color name="logo_ring_color">#FF556A97</color>
+    <color name="font_color_white">#FFFFFFFF</color>
+    <color name="setting_color">#D8D8D8</color>
+    <color name="setting_bg_color">#F8F8F6</color>
+    <color name="font_light_blue_2">#244766</color>
+    <color name="font_light_gray_6">#2F2F2F</color>
+    <color name="font_light_gray_7">#B8B8B8</color>
+
+
+
     <color name="white">#ffffff</color>
     <color name="bar_dark_blue_color">#FF556995</color>
     <color name="bar_light_blue_color">#FF5A7BC0</color>

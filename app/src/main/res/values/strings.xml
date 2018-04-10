@@ -1,4 +1,11 @@
 <resources>
+    <string name="user_name">请输入您的手机号</string>
+    <string name="email">请输入您的邮箱</string>
+    <string name="password">请输入密码</string>
+    <string name="password_again">请重新输入密码</string>
+    <string name="register">注册</string>
+    <string name="username_prompt">请输入正确格式的手机号</string>
+    <string name="please_input_vertifi_code">请输入验证码</string>
     <string name="app_name">基于定位的考勤系统</string>
     <string name="full_name">基于定位的考勤系统</string>
     <string name="please_input_username">请输入您的用户名</string>
