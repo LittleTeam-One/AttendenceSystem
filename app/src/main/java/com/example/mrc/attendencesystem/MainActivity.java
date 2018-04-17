@@ -13,4 +13,11 @@ public class MainActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(this ,LoginActivity.class);
         startActivity(loginIntent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent loginIntent = new Intent(this ,LoginActivity.class);
+        startActivity(loginIntent);
+    }
 }
