@@ -35,7 +35,7 @@ public class ClientConServerThread extends Thread {
                 m=(MessageInfo) ois.readObject();
                 if(m.getType().equals(MessageType.COM_MES)
                         || m.getType().equals(MessageType.GROUP_MES)){
-                    Intent intent = new Intent("org.yhn.yq.mes");
+                    Intent intent = new Intent("com.example.mrc.attendencesystem");
                     String[] message=new String[]{
                             m.getSender()+"",
                             m.getSenderNick(),
@@ -48,8 +48,8 @@ public class ClientConServerThread extends Thread {
                     context.sendBroadcast(intent);
                 }else if(m.getType().equals(MessageType.RET_ONLINE_FRIENDS)){
                     String s[] = m.getContent().split(",");
-                    BuddyActivity.buddyStr=s[0];
-                    GroupActivity.groupStr=s[1];
+                    //BuddyActivity.buddyStr=s[0];
+                   // GroupActivity.groupStr=s[1];
                 }
                 if(m.getType().equals(MessageType.SUCCESS)){
                     Toast.makeText(context, "hhhhhh", Toast.LENGTH_SHORT);

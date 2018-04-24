@@ -62,7 +62,6 @@ public class AttendenceSystemClient {
             try{
                 s.connect(new InetSocketAddress("192.168.1.101",5469),2000);
             }catch(SocketTimeoutException e){
-                //���ӷ�������ʱ
                 return false;
             }
             ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());

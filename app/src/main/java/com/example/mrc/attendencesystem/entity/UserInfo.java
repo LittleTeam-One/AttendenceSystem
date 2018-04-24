@@ -14,6 +14,8 @@ public class UserInfo {
     private String studentNumber ;
     private int age;
     private int gender;
+    private int is_login;
+    private int operation;
 
     public int getId() {
         return id;
@@ -77,6 +79,22 @@ public class UserInfo {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public int getIs_login() {
+        return is_login;
+    }
+
+    public void setIs_login(int is_login) {
+        this.is_login = is_login;
+    }
+
+    public int getOperation() {
+        return operation;
+    }
+
+    public void setOperation(int operation) {
+        this.operation = operation;
     }
 }
 
