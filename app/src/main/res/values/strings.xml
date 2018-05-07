@@ -1,6 +1,6 @@
 <resources>
     <string name="user_name">请输入您的手机号</string>
-    <string name="email">请输入您的邮箱</string>
+    <!--<string name="email">请输入您的邮箱</string>-->
     <string name="password">请输入密码</string>
     <string name="student_number">请输入学号</string>
     <string name="password_again">请重新输入密码</string>
@@ -25,7 +25,6 @@
     <string name="password_again_is_not_equal_to_password">两次输入密码不统一</string>
     <string name="please_input_the_correct_email">请输入正确的邮箱</string>
     <string name="app_version">版本号: %1$s</string>
-    <string name="register_email">请输入您的邮箱</string>
     <string name="next">下一步</string>
     <string name="email_identifying_code">手机验证码</string>
     <string name="send_identifying_code">发送验证码</string>

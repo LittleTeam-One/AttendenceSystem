@@ -2,6 +2,9 @@ package com.example.mrc.attendencesystem.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mrc.attendencesystem.R;
+import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
+import com.example.mrc.attendencesystem.entity.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +29,7 @@ import cn.smssdk.SMSSDK;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText mUsernameEdit;//手机号
-    private EditText mEmailEdit;
+    /*private EditText mEmailEdit;*/
     private AppCompatButton mSendVertiCodeBtn;//发送验证码按钮
     private AppCompatButton mRegisterBtn;//注册按钮
     private EditText mPhoneVertifiEdit;//输入验证码
@@ -47,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         mSendVertiCodeBtn = findViewById(R.id.send_ic_btn);
         mRegisterBtn = findViewById(R.id.register_btn);
         mPhoneVertifiEdit = findViewById(R.id.email_ic_editText);
-        mEmailEdit = findViewById(R.id.email_editText);
+        /*mEmailEdit = findViewById(R.id.email_editText);*/
         mPassword = findViewById(R.id.password_editText);
         mAgainPassword = findViewById(R.id.password_again_editText);
         mStudentNumber = findViewById(R.id.student_number_editText);
@@ -85,13 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = mEmailEdit.getText().toString();
+                /*String email = mEmailEdit.getText().toString();*/
                 String studentNumber = mStudentNumber.getText().toString();
                 String password = mPassword.getText().toString();
                 String againPassword = mAgainPassword.getText().toString();
-                validateInput(mPhoneNumber,email,password,againPassword ,studentNumber);
+                boolean inputIsOk = validateInput(mPhoneNumber,password,againPassword ,studentNumber);
                 String phoneVertifiCode = mPhoneVertifiEdit.getText().toString();
-                if(!TextUtils.isEmpty(phoneVertifiCode)){
+                if(!TextUtils.isEmpty(phoneVertifiCode) && inputIsOk){
                     SMSSDK.unregisterAllEventHandler();
                     SMSSDK.registerEventHandler(new EventHandler(){
                         @Override
@@ -99,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                             super.afterEvent(i, i1, o);
                             if(i1 == SMSSDK.RESULT_COMPLETE){
                                 //验证码成功之后 此为子线程 需要在UI线程或Handler更新UI
+                                verifyServer();   //与服务端进行验证
                             }
                         }
                     });
@@ -114,17 +120,13 @@ public class RegisterActivity extends AppCompatActivity {
     /**
      * 注册字段的正则验证
      * @param userName
-     * @param email
      * @param passWord
      * @param passwordAgain
      * @return
      */
-    private boolean validateInput(String userName, String email, String passWord, String passwordAgain ,String studentNumber) {
+    private boolean validateInput(String userName, String passWord, String passwordAgain ,String studentNumber) {
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this,getString(R.string.username_can_not_be_null),Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (TextUtils.isEmpty(email)) {
-            Toast.makeText(RegisterActivity.this,getString(R.string.email_can_not_be_null),Toast.LENGTH_SHORT).show();
             return false;
         } else if (TextUtils.isEmpty(passWord)) {
             Toast.makeText(RegisterActivity.this,getString(R.string.password_can_not_be_null),Toast.LENGTH_SHORT).show();
@@ -145,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     /**
      * 判断是否为正确的手机号
-     * @param phone 邮箱
+     * @param phone 手机号
      * @return 返回true为正确手机号格式
      */
     public boolean isPhone(String phone) {
@@ -170,5 +172,47 @@ public class RegisterActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void verifyServer(){
+        Thread thread =new Thread(new Runnable() {
+            @Override
+            public void run() {
+                User user=new User();
+                user.setId(-1);
+                user.setPhoneNumber(mUsernameEdit.getText().toString());
+                user.setEmail("");
+                user.setPassword(mPassword.getText().toString());
+                user.setUserName("");
+                user.setGender(-1);
+                user.setCreateTime("");
+                user.setUpdateTime("");
+                user.setAge(-1);
+                user.setStudentId(mStudentNumber.getText().toString());
+                user.setOperation("register");
+                boolean b = new AttendenceSystemClient(RegisterActivity.this).sendRegisterInfo(user);
+                if(b){
+                    //注册成功跳转到登陆
+                    Handler handlerThree=new Handler(Looper.getMainLooper());
+                    handlerThree.post(new Runnable(){
+                        public void run(){
+                            Toast.makeText(RegisterActivity.this, "恭喜你，注册成功 ！",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                }else {
+                    Handler handlerThree=new Handler(Looper.getMainLooper());
+                    handlerThree.post(new Runnable(){
+                        public void run(){
+                            Toast.makeText(RegisterActivity.this, "注册失败，请重新注册！",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    mPhoneVertifiEdit.setText(null);
+                }
+            }
+        });
+        thread.start();
     }
 }

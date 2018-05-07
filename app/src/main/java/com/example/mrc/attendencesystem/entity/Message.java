@@ -1,11 +1,14 @@
 package com.example.mrc.attendencesystem.entity;
 
+import java.io.Serializable;
+
 /**
  * 信息的实体类
  * Created by Mr.C on 2018/4/18.
  */
 
-public class MessageInfo {
+public class Message implements Serializable{
+    private static final long serialVersionUID = 2L;
     String type;
     String sender;
     String senderNick;
