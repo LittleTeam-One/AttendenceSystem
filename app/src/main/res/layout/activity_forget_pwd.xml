@@ -21,7 +21,7 @@
             android:layout_marginBottom="18dp"
             android:layout_marginLeft="23dp"
             android:layout_marginTop="18dp"
-            android:src="@mipmap/ic_email" />
+            android:src="@mipmap/ic_phone" />
 
         <View
             android:layout_width="1dp"
@@ -32,12 +32,12 @@
 
         <EditText
             android:id="@+id/register_email_editText"
-            android:layout_width="215dp"
+            android:layout_width="213dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:background="@null"
-            android:hint="@string/register_email"
+            android:hint="@string/user_name"
             android:textColor="@color/font_color_light_blue"
             android:textSize="@dimen/font_size_15sp" />
     </LinearLayout>

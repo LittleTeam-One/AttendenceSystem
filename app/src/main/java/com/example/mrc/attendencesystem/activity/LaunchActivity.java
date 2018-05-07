@@ -12,14 +12,14 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-        Intent loginIntent = new Intent(this ,MainActivity.class);
+        Intent loginIntent = new Intent(this ,LoginActivity.class);
         startActivity(loginIntent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Intent loginIntent = new Intent(this ,MainActivity.class);
+        Intent loginIntent = new Intent(this ,LoginActivity.class);
         startActivity(loginIntent);
     }
 

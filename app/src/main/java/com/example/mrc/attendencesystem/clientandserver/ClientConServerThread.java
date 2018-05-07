@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.mrc.attendencesystem.entity.MessageInfo;
+import com.example.mrc.attendencesystem.entity.Message;
 import com.example.mrc.attendencesystem.entity.MessageType;
 
 import java.io.IOException;
@@ -29,10 +29,10 @@ public class ClientConServerThread extends Thread {
     public void run() {
         while(true){
             ObjectInputStream ois = null;
-            MessageInfo m;
+            Message m;
             try {
                 ois = new ObjectInputStream(s.getInputStream());
-                m=(MessageInfo) ois.readObject();
+                m=(Message) ois.readObject();
                 if(m.getType().equals(MessageType.COM_MES)
                         || m.getType().equals(MessageType.GROUP_MES)){
                     Intent intent = new Intent("com.example.mrc.attendencesystem");
@@ -52,7 +52,7 @@ public class ClientConServerThread extends Thread {
                    // GroupActivity.groupStr=s[1];
                 }
                 if(m.getType().equals(MessageType.SUCCESS)){
-                    Toast.makeText(context, "hhhhhh", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "登录成功！", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 //e.printStackTrace();

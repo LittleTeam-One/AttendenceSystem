@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.Message;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -22,9 +22,9 @@ import android.widget.Toast;
 import com.example.mrc.attendencesystem.R;
 import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
 import com.example.mrc.attendencesystem.clientandserver.ManageClientConServer;
-import com.example.mrc.attendencesystem.entity.MessageInfo;
+import com.example.mrc.attendencesystem.entity.Message;
 import com.example.mrc.attendencesystem.entity.MessageType;
-import com.example.mrc.attendencesystem.entity.UserInfo;
+import com.example.mrc.attendencesystem.entity.User;
 import com.example.mrc.attendencesystem.provider.CodeUtils;
 
 import java.io.IOException;
@@ -132,20 +132,30 @@ public class LoginActivity extends AppCompatActivity {
                 icNumber = mIcEdit.getText().toString();
                 boolean noFault = validateInput(username, password, icNumber);
                 if (noFault) {
-                    handler.post(new Runnable(){
+                    //在子线程里运行网络请求
+                    Thread thread =new Thread(new Runnable(){
                         public void run() {
                             boolean b=login(username, password);
                             if(b){
-                                Message m=new Message();
+                                /*android.os.Message m=new android.os.Message();
                                 m.what=1;
-                                handler.sendMessage(m);
+                                handler.sendMessage(m);*/
                                 //转到主界面
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }else {
-                                Toast.makeText(LoginActivity.this, "账号和密码不匹配，请重新登录！", Toast.LENGTH_SHORT).show();
+                                //子线程不能运行Toast，需要推到子线程里
+                                Handler handlerThree=new Handler(Looper.getMainLooper());
+                                handlerThree.post(new Runnable(){
+                                    public void run(){
+                                        Toast.makeText(LoginActivity.this,
+                                                "账号和密码不匹配，请重新登录！", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                             }
                         }
                     });
+                    thread.start();
                 }
             }
         });
@@ -183,20 +193,20 @@ public class LoginActivity extends AppCompatActivity {
      * create at 2018/5/7 10:47
      */
     boolean login(String a, String p){
-        UserInfo userInfo=new UserInfo();
-        userInfo.setAccount(a);
-        userInfo.setPassword(p);
-        userInfo.setOperation("login");
-        boolean b=new AttendenceSystemClient(this).sendLoginInfo(userInfo);
+        User user =new User();
+        user.setPhoneNumber(a);
+        user.setPassword(p);
+        user.setOperation("login");
+        boolean b=new AttendenceSystemClient(this).sendLoginInfo(user);
         //登陆成功
         if(b){
             try {
                 //发送一个要求返回在线好友的请求的Message
                 ObjectOutputStream oos = new ObjectOutputStream	(
-                        ManageClientConServer.getClientConServerThread(userInfo.getAccount()).getS().getOutputStream());
-                MessageInfo m=new MessageInfo();
+                        ManageClientConServer.getClientConServerThread(user.getPhoneNumber()).getS().getOutputStream());
+                Message m=new Message();
                 m.setType(MessageType.GET_ONLINE_FRIENDS);
-                m.setSender(userInfo.getAccount());
+                m.setSender(user.getPhoneNumber());
                 oos.writeObject(m);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -209,13 +219,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private Handler handler=new Handler(){
-        public void handleMessage(Message msg){
+   /* private Handler handler=new Handler(){
+        public void handleMessage(android.os.Message msg){
             switch(msg.what){
                 case 1:
-                    dialog.dismiss();
+                    //dialog.dismiss();
                     break;
             }
         }
-    };
+    };*/
 }

@@ -1,7 +1,6 @@
 package com.example.mrc.attendencesystem.clientandserver;
 
-import com.example.mrc.attendencesystem.entity.MessageInfo;
-import com.example.mrc.attendencesystem.entity.TimeInfo;
+import com.example.mrc.attendencesystem.entity.Message;
 
 import java.io.ObjectOutputStream;
 
@@ -15,7 +14,7 @@ public class SendMessage {
             String myAccount=MoreActivity.me.getAccount();
             ObjectOutputStream oos = new ObjectOutputStream
                     (ManageClientConServer.getClientConServerThread(myAccount).getS().getOutputStream());
-            MessageInfo m=new MessageInfo();
+            Message m=new Message();
             m.setType(type);
             m.setSender(myAccount);
             m.setSenderNick(MoreActivity.me.getNick());
@@ -33,7 +32,7 @@ public class SendMessage {
         try{
             ObjectOutputStream oos = new ObjectOutputStream
                     (ManageClientConServer.getClientConServerThread(myAccount).getS().getOutputStream());
-            MessageInfo m=new MessageInfo();
+            Message m=new Message();
             m.setType(type);
             m.setSender(myAccount);
             m.setReceiver(dfAccount);

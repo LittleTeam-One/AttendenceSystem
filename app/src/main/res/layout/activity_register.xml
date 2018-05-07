@@ -41,8 +41,8 @@
             android:textSize="@dimen/font_size_15sp" />
     </LinearLayout>
 
-
-    <LinearLayout
+    //注册页面邮箱暂时不用
+    <!--<LinearLayout
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -76,7 +76,7 @@
             android:hint="@string/email"
             android:textColor="@color/font_color_light_blue"
             android:textSize="@dimen/font_size_15sp" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <LinearLayout
