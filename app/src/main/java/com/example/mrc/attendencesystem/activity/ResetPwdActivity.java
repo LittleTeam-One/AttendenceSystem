@@ -1,7 +1,9 @@
-package com.example.mrc.attendencesystem;
+package com.example.mrc.attendencesystem.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.mrc.attendencesystem.R;
 
 public class ResetPwdActivity extends AppCompatActivity {
 

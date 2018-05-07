@@ -1,8 +1,11 @@
-package com.example.mrc.attendencesystem;
+package com.example.mrc.attendencesystem.activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -16,7 +19,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mrc.attendencesystem.R;
+import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
+import com.example.mrc.attendencesystem.clientandserver.ManageClientConServer;
+import com.example.mrc.attendencesystem.entity.MessageInfo;
+import com.example.mrc.attendencesystem.entity.MessageType;
+import com.example.mrc.attendencesystem.entity.UserInfo;
 import com.example.mrc.attendencesystem.provider.CodeUtils;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class LoginActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -30,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private String mIcNumber;                           //自动生成的验证码
     private String username, password, icNumber;        //用户输入的信息
     private String mAppVersion;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +132,20 @@ public class LoginActivity extends AppCompatActivity {
                 icNumber = mIcEdit.getText().toString();
                 boolean noFault = validateInput(username, password, icNumber);
                 if (noFault) {
-
+                    handler.post(new Runnable(){
+                        public void run() {
+                            boolean b=login(username, password);
+                            if(b){
+                                Message m=new Message();
+                                m.what=1;
+                                handler.sendMessage(m);
+                                //转到主界面
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }else {
+                                Toast.makeText(LoginActivity.this, "账号和密码不匹配，请重新登录！", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -151,4 +177,45 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 登录信息发送到服务端验证
+     * @author  cqx
+     * create at 2018/5/7 10:47
+     */
+    boolean login(String a, String p){
+        UserInfo userInfo=new UserInfo();
+        userInfo.setAccount(a);
+        userInfo.setPassword(p);
+        userInfo.setOperation("login");
+        boolean b=new AttendenceSystemClient(this).sendLoginInfo(userInfo);
+        //登陆成功
+        if(b){
+            try {
+                //发送一个要求返回在线好友的请求的Message
+                ObjectOutputStream oos = new ObjectOutputStream	(
+                        ManageClientConServer.getClientConServerThread(userInfo.getAccount()).getS().getOutputStream());
+                MessageInfo m=new MessageInfo();
+                m.setType(MessageType.GET_ONLINE_FRIENDS);
+                m.setSender(userInfo.getAccount());
+                oos.writeObject(m);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.finish();
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+    private Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            switch(msg.what){
+                case 1:
+                    dialog.dismiss();
+                    break;
+            }
+        }
+    };
 }
