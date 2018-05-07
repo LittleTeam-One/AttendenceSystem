@@ -10,9 +10,9 @@ import java.io.ObjectOutputStream;
  */
 
 public class SendMessage {
-    public static void sendMes(int dfAccount,String content,String type){
-        /*try{
-            int myAccount=MoreActivity.me.getAccount();
+    /*public static void sendMes(int dfAccount,String content,String type){
+        try{
+            String myAccount=MoreActivity.me.getAccount();
             ObjectOutputStream oos = new ObjectOutputStream
                     (ManageClientConServer.getClientConServerThread(myAccount).getS().getOutputStream());
             MessageInfo m=new MessageInfo();
@@ -26,10 +26,10 @@ public class SendMessage {
             oos.writeObject(m);
         }catch(Exception e){
             e.printStackTrace();
-        }*/
-    }
+        }
+    }*/
 
-    public static void sendADbuddy(int myAccount,int dfAccount ,String type){
+    public static void sendADbuddy(String myAccount,int dfAccount ,String type){
         try{
             ObjectOutputStream oos = new ObjectOutputStream
                     (ManageClientConServer.getClientConServerThread(myAccount).getS().getOutputStream());

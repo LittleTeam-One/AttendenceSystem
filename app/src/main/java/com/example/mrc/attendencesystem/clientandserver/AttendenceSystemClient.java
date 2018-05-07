@@ -2,7 +2,7 @@ package com.example.mrc.attendencesystem.clientandserver;
 
 import android.content.Context;
 
-import com.example.mrc.attendencesystem.MainActivity;
+import com.example.mrc.attendencesystem.activity.LaunchActivity;
 import com.example.mrc.attendencesystem.entity.MessageInfo;
 import com.example.mrc.attendencesystem.entity.MessageType;
 import com.example.mrc.attendencesystem.entity.UserInfo;
@@ -30,7 +30,7 @@ public class AttendenceSystemClient {
         try {
             s = new Socket();
             try{
-                s.connect(new InetSocketAddress("192.168.1.101",5469),2000);
+                s.connect(new InetSocketAddress("192.168.1.128",5469),2000);
             }catch(SocketTimeoutException e){
                 return false;
             }
@@ -39,7 +39,7 @@ public class AttendenceSystemClient {
             ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
             MessageInfo ms=(MessageInfo)ois.readObject();
             if(ms.getType().equals(MessageType.SUCCESS)){
-                MainActivity.myInfo=ms.getContent();
+                LaunchActivity.myInfo=ms.getContent();
                 ClientConServerThread ccst=new ClientConServerThread(context,s);
                 ccst.start();
                 ManageClientConServer.addClientConServerThread(((UserInfo)obj).getAccount(), ccst);

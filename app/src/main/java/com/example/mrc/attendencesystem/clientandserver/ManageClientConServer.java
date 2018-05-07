@@ -13,7 +13,7 @@ public class ManageClientConServer {
         hm.put(account, ccst);
     }
 
-    public static ClientConServerThread getClientConServerThread(int i){
+    public static ClientConServerThread getClientConServerThread(String i){
         return (ClientConServerThread)hm.get(i);
     }
 }

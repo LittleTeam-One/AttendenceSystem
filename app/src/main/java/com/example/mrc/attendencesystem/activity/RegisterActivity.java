@@ -1,4 +1,4 @@
-package com.example.mrc.attendencesystem;
+package com.example.mrc.attendencesystem.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,12 +9,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.example.mrc.attendencesystem.R;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPhoneVertifiEdit;//输入验证码
     private EditText mPassword;//密码
     private EditText mAgainPassword;//重新输入密码
+    private EditText mStudentNumber;
     private String mPhoneNumber;
     private boolean mCanRegister = false;
     private Context mContext;
@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEmailEdit = findViewById(R.id.email_editText);
         mPassword = findViewById(R.id.password_editText);
         mAgainPassword = findViewById(R.id.password_again_editText);
+        mStudentNumber = findViewById(R.id.student_number_editText);
         setListeners();
     }
 
@@ -85,9 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = mEmailEdit.getText().toString();
+                String studentNumber = mStudentNumber.getText().toString();
                 String password = mPassword.getText().toString();
                 String againPassword = mAgainPassword.getText().toString();
-                validateInput(mPhoneNumber,email,password,againPassword);
+                validateInput(mPhoneNumber,email,password,againPassword ,studentNumber);
                 String phoneVertifiCode = mPhoneVertifiEdit.getText().toString();
                 if(!TextUtils.isEmpty(phoneVertifiCode)){
                     SMSSDK.unregisterAllEventHandler();
@@ -117,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @param passwordAgain
      * @return
      */
-    private boolean validateInput(String userName, String email, String passWord, String passwordAgain) {
+    private boolean validateInput(String userName, String email, String passWord, String passwordAgain ,String studentNumber) {
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(RegisterActivity.this,getString(R.string.username_can_not_be_null),Toast.LENGTH_SHORT).show();
             return false;
@@ -133,7 +135,10 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (!passwordAgain.equals(passWord)) {
             Toast.makeText(RegisterActivity.this,getString(R.string.password_again_is_not_equal_to_password),Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        } else if(TextUtils.isEmpty(studentNumber)){
+            Toast.makeText(RegisterActivity.this,getString(R.string.student_number_can_not_be_null),Toast.LENGTH_SHORT).show();
+            return false;
+        } else{
             return true;
         }
     }

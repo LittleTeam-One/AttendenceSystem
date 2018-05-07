@@ -15,7 +15,7 @@ public class UserInfo {
     private int age;
     private int gender;
     private int is_login;
-    private int operation;
+    private String operation;
 
     public int getId() {
         return id;
@@ -89,11 +89,11 @@ public class UserInfo {
         this.is_login = is_login;
     }
 
-    public int getOperation() {
+    public String getOperation() {
         return operation;
     }
 
-    public void setOperation(int operation) {
+    public void setOperation(String operation) {
         this.operation = operation;
     }
 }

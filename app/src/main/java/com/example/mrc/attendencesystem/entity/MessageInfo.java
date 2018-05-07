@@ -7,7 +7,7 @@ package com.example.mrc.attendencesystem.entity;
 
 public class MessageInfo {
     String type;
-    int sender;
+    String sender;
     String senderNick;
     int senderAvatar;
     int receiver;
@@ -20,10 +20,10 @@ public class MessageInfo {
     public void setType(String type) {
         this.type = type;
     }
-    public int getSender() {
+    public String getSender() {
         return sender;
     }
-    public void setSender(int sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
     public String getSenderNick() {

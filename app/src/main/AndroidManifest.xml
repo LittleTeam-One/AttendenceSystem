@@ -10,21 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".activity.LaunchActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
-            android:screenOrientation="portrait">
-        </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Light.NoActionBar" />
-        <activity android:name=".ForgetPwdActivity" />
-        <activity android:name=".ResetPwdActivity"></activity>
+        <activity android:name=".activity.ForgetPwdActivity" />
+        <activity android:name=".activity.ResetPwdActivity" />
+        <activity android:name=".activity.MainActivity"></activity>
     </application>
 
 </manifest>

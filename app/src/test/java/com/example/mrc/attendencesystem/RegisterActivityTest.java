@@ -1,5 +1,7 @@
 package com.example.mrc.attendencesystem;
 
+import com.example.mrc.attendencesystem.activity.RegisterActivity;
+
 import org.junit.Before;
 import org.junit.Test;
 
