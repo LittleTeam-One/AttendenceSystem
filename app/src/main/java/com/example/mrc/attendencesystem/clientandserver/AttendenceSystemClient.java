@@ -1,19 +1,19 @@
 package com.example.mrc.attendencesystem.clientandserver;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.mrc.attendencesystem.activity.LaunchActivity;
 import com.example.mrc.attendencesystem.entity.Message;
 import com.example.mrc.attendencesystem.entity.MessageType;
 import com.example.mrc.attendencesystem.entity.User;
+import com.example.mrc.attendencesystem.server.SocketConnectService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
+
+import static com.mob.tools.utils.DeviceHelper.getApplication;
 
 /**
  * Created by Mr.C on 2018/4/18.
@@ -29,10 +29,8 @@ public class AttendenceSystemClient {
     public boolean sendLoginInfo(Object obj){
         boolean b=false;
         try {
-            s = new Socket();
-            try{
-                s.connect(new InetSocketAddress("192.168.1.128",5469),2000);
-            }catch(SocketTimeoutException e){
+            s = SocketConnectService.getSocket();
+            if(s == null){
                 return false;
             }
             ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
@@ -40,6 +38,7 @@ public class AttendenceSystemClient {
             ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
             //Log.d("sendLoginInfo" ,"here");
             Message ms=(Message)ois.readObject();
+            //Log.d("messagefff" ,ms.getContent().toString());
 
             if(ms.getType().equals(MessageType.SUCCESS)){
                 LaunchActivity.myInfo=ms.getContent();
@@ -61,10 +60,8 @@ public class AttendenceSystemClient {
     public boolean sendRegisterInfo(Object obj){
         boolean b=false;
         try {
-            s=new Socket();
-            try{
-                s.connect(new InetSocketAddress("192.168.1.128",5469),2000);
-            }catch(SocketTimeoutException e){
+            s = SocketConnectService.getSocket();
+            if(s == null){
                 return false;
             }
             ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());

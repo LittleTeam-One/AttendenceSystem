@@ -28,7 +28,7 @@ public class SendMessage {
         }
     }*/
 
-    public static void sendADbuddy(String myAccount,int dfAccount ,String type){
+    public static void sendADbuddy(String myAccount,String dfAccount ,String type){
         try{
             ObjectOutputStream oos = new ObjectOutputStream
                     (ManageClientConServer.getClientConServerThread(myAccount).getS().getOutputStream());

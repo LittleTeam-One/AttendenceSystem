@@ -137,9 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             boolean b=login(username, password);
                             if(b){
-                                /*android.os.Message m=new android.os.Message();
-                                m.what=1;
-                                handler.sendMessage(m);*/
                                 //转到主界面
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             }else {
@@ -217,15 +214,4 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
-
-
-   /* private Handler handler=new Handler(){
-        public void handleMessage(android.os.Message msg){
-            switch(msg.what){
-                case 1:
-                    //dialog.dismiss();
-                    break;
-            }
-        }
-    };*/
 }

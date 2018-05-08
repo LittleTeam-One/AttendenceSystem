@@ -21,14 +21,19 @@
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Light.NoActionBar" />
         <activity android:name=".activity.ForgetPwdActivity" />
         <activity android:name=".activity.ResetPwdActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
+
+        <service
+            android:name=".server.SocketConnectService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

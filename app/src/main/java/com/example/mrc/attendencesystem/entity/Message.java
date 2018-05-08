@@ -13,7 +13,7 @@ public class Message implements Serializable{
     String sender;
     String senderNick;
     int senderAvatar;
-    int receiver;
+    String receiver;
     String content;
     String sendTime;
 
@@ -41,10 +41,10 @@ public class Message implements Serializable{
     public void setSenderAvatar(int senderAvatar) {
         this.senderAvatar = senderAvatar;
     }
-    public int getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
-    public void setReceiver(int receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
     public String getContent() {
