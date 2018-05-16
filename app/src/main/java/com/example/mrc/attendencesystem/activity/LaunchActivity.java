@@ -22,8 +22,7 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Intent loginIntent = new Intent(this ,MainActivity.class);
-        startActivity(loginIntent);
+        finish();
     }
 
     @Override

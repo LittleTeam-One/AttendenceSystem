@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/ic_head_icon"/>
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_icon"
+        android:layout_marginLeft="16dp"
+        android:layout_toEndOf="@+id/img_icon"
+        android:layout_toRightOf="@+id/img_icon"
+        android:text="周玉欣"
+        android:textColor="@color/simple_black"
+        android:textSize="@dimen/font_size_20sp" />
+
+    <TextView
+        android:id="@+id/tv_active_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_username"
+        android:layout_alignStart="@+id/tv_username"
+        android:layout_below="@+id/tv_username"
+        android:text="最新活跃时间：星期一"
+        android:textColor="@color/hint_color"
+        android:textSize="@dimen/font_size_15sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.75dp"
+        android:background="@color/view_color"
+        android:layout_below="@+id/img_icon"/>
+</RelativeLayout>
