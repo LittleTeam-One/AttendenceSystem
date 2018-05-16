@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="聊天消息"/>
-</RelativeLayout>
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:id="@+id/img_search_box"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/search_box"/>
+        <LinearLayout
+            android:layout_alignTop="@+id/img_search_box"
+            android:orientation="horizontal"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content">
+            <ImageView
+                android:id="@+id/img_search"
+                android:src="@drawable/ic_search"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_search_hint"
+                android:text="搜索"
+                android:textColor="#bfbfbf"/>
+        </LinearLayout>
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/img_search_box"
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.75dp"
+            android:background="@color/view_color"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_message"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</LinearLayout>

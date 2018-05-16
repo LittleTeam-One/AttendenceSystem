@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="black">#000000</color>
+    <color name="black">#202020</color>
+    <color name="simple_black">#FF202020</color>
     <color name="light_gray_color">#E0E0E0</color>
     <color name="logo_ring_color">#FF556A97</color>
     <color name="font_color_white">#FFFFFFFF</color>
@@ -12,8 +13,8 @@
     <color name="font_light_blue_2">#244766</color>
     <color name="font_light_gray_6">#2F2F2F</color>
     <color name="font_light_gray_7">#B8B8B8</color>
-
-
+    <color name="search_box_color">#e6e6e6</color>
+    <color name="view_color">#e4e4e4</color>
 
     <color name="white">#ffffff</color>
     <color name="bar_dark_blue_color">#FF556995</color>
@@ -26,12 +27,16 @@
     <color name="statusBar_color">#455a88</color>
     <color name="button_clicked_color">#BDBDBD</color>
 
-
+    <dimen name="font_size_22sp">22sp</dimen>
+    <dimen name="font_size_21sp">21sp</dimen>
+    <dimen name="font_size_20sp">20sp</dimen>
+    <dimen name="font_size_19sp">19sp</dimen>
     <dimen name="font_size_18sp">18sp</dimen>
     <dimen name="font_size_17sp">17sp</dimen>
     <dimen name="font_size_16sp">16sp</dimen>
     <dimen name="font_size_15sp">15sp</dimen>
     <dimen name="font_size_14sp">14sp</dimen>
+    <dimen name="font_size_13sp">13sp</dimen>
     <dimen name="font_size_12sp">12sp</dimen>
     <dimen name="font_size_11sp">11sp</dimen>
 </resources>
