@@ -19,6 +19,10 @@
     //鉴权所需该权限获取进程列表
     <uses-permission android:name="android.permission.CAMERA" />
     //使用步行AR导航，配置Camera权限
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:name="com.mob.MobApplication"
@@ -30,7 +34,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="QvGEzZA5b2v4SCvSzbK1eVvY1VEcWUAG" />
+            android:value="O7DS7rFPuqsVGlGloVfP4rXxrkRrdHKX" />
         <activity
             android:name=".activity.LaunchActivity"
             android:launchMode="singleTask">
@@ -66,7 +70,15 @@
             android:theme="@style/Light.NoActionBar" />
         <activity android:name=".activity.CreateGroupsActivity" />
         <activity android:name=".activity.LocationActivity"
-            android:theme="@style/Light.NoActionBar" ></activity>
+            android:theme="@style/Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
     </application>
 
 </manifest>
