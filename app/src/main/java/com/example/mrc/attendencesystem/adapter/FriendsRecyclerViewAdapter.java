@@ -49,6 +49,33 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
         return mFriendsListData.size();
     }
 
+
+    /*
+    * 点击事件的接口，方法
+    * */
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    /*
+    * 长按事件的接口，方法
+    * */
+    private OnItemLongClickListener longListener;
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(View itemView, int position);
+
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener longListener) {
+        this.longListener = longListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder  {
         public ImageView mImageIcon;
         public TextView mUserName;
@@ -58,6 +85,41 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
             mImageIcon = (ImageView) viewHolder.findViewById(R.id.img_icon);
             mUserName = (TextView) viewHolder.findViewById(R.id.tv_username);
             mOnlineStatus = (TextView) viewHolder.findViewById(R.id.tv_online_status);
+
+            viewHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(view, position);
+                        }
+                    }
+                }
+            });
+            viewHolder.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (longListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            longListener.onItemLongClick(viewHolder, position);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
     }
+
+    //  删除数据
+    public void removeData(int position) {
+        mFriendsListData.remove(position);
+        //删除动画
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
+
 }

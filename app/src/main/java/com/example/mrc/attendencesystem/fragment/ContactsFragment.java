@@ -1,33 +1,28 @@
 package com.example.mrc.attendencesystem.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.mrc.attendencesystem.R;
 import com.example.mrc.attendencesystem.activity.AddFriendsOrGroupsActivity;
+import com.example.mrc.attendencesystem.activity.ChatActivity;
 import com.example.mrc.attendencesystem.activity.CreateGroupsActivity;
-import com.example.mrc.attendencesystem.activity.MainActivity;
 import com.example.mrc.attendencesystem.activity.SearchFriendsAndGroupActivity;
 import com.example.mrc.attendencesystem.adapter.FriendsRecyclerViewAdapter;
 import com.example.mrc.attendencesystem.adapter.GroupsRecyclerViewAdapter;
-import com.example.mrc.attendencesystem.adapter.MessageRecyclerViewAdapter;
 import com.example.mrc.attendencesystem.entity.FriendsItem;
 import com.example.mrc.attendencesystem.entity.GroupsItem;
-import com.example.mrc.attendencesystem.entity.MessageItem;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +31,9 @@ import java.util.List;
  * Created by Mr.C on 2018/5/7.
  */
 
-public class ContactsFragment extends Fragment implements View.OnClickListener {
+public class ContactsFragment extends Fragment implements View.OnClickListener,
+        FriendsRecyclerViewAdapter.OnItemClickListener, FriendsRecyclerViewAdapter.OnItemLongClickListener,
+        GroupsRecyclerViewAdapter.OnItemClickListenerGroup, GroupsRecyclerViewAdapter.OnItemLongClickListenerGroup{
     static Context mContext;
     private LinearLayout mTvAddFriendsAndGroups ,mTvCreateGroup;
     private LinearLayout mLLFriends ,mLLGroups;
@@ -142,6 +139,8 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                     mRecyclerViewFriends.setVisibility(View.VISIBLE);
                     //初始化好友列表
                     mFriendsRecyclerViewAdapter = new FriendsRecyclerViewAdapter(mContext , mFriendsData);
+                    mFriendsRecyclerViewAdapter.setOnItemClickListener(this);
+                    mFriendsRecyclerViewAdapter.setOnItemLongClickListener(this);
                     mRecyclerViewFriends.setAdapter(mFriendsRecyclerViewAdapter);
                 }
                 break;
@@ -152,6 +151,8 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
                     mRecyclerViewGroups.setVisibility(View.VISIBLE);
                     //初始化群组列表
                     mGroupsRecyclerViewAdapter = new GroupsRecyclerViewAdapter(mContext , mGroupsData);
+                    mGroupsRecyclerViewAdapter.setOnItemClickListenerGroup(this);
+                    mGroupsRecyclerViewAdapter.setOnItemLongClickListenerGroup(this);
                     mRecyclerViewGroups.setAdapter(mGroupsRecyclerViewAdapter);
                 }
                 break;
@@ -168,5 +169,85 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    /**
+     * 联系人列表的点击事件监听
+     * @author  cqx
+     * create at 2018/5/23 0:58
+     */
+    @Override
+    public void onItemClickGroup(View itemView, int position) {
+        Intent toChatIntent = new Intent(mContext , ChatActivity.class);
+        startActivity(toChatIntent);
+    }
+
+    /**
+     * 联系人列表的长按事件监听
+     * @author  cqx
+     * create at 2018/5/23 0:59
+     */
+    @Override
+    public void onItemLongClickGroup(View itemView, final int position) {
+        String item = mFriendsData.get(position).getUsername();
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(mContext);
+        normalDialog.setMessage("是否删除聊天群 " + item + " ？");
+        normalDialog.setPositiveButton("是",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mGroupsRecyclerViewAdapter.removeData(position);
+                    }
+                });
+        normalDialog.setNegativeButton("否",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                    }
+                });
+        // 显示
+        normalDialog.show();
+    }
+
+    /**
+     * 群组列表的点击事件监听
+     * @author  cqx
+     * create at 2018/5/23 1:12
+     */
+    @Override
+    public void onItemClick(View itemView, int position) {
+        Intent toChatIntent = new Intent(mContext , ChatActivity.class);
+        startActivity(toChatIntent);
+    }
+
+    /**
+     * 群组列表的长按事件监听
+     * @author  cqx
+     * create at 2018/5/23 1:13
+     */
+    @Override
+    public void onItemLongClick(View itemView, final int position) {
+        String item = mGroupsData.get(position).getUsername();
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(mContext);
+        normalDialog.setMessage("是否删除联系人 " + item + " ？");
+        normalDialog.setPositiveButton("是",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mFriendsRecyclerViewAdapter.removeData(position);
+                    }
+                });
+        normalDialog.setNegativeButton("否",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
 }

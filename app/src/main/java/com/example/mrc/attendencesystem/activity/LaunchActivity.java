@@ -15,7 +15,7 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
         Intent intent =new Intent(this , SocketConnectService.class);
         startService(intent);
-        Intent loginIntent = new Intent(this ,ChatActivity.class);
+        Intent loginIntent = new Intent(this ,MainActivity.class);
         startActivity(loginIntent);
     }
 

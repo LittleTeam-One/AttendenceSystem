@@ -39,7 +39,7 @@
 
         <activity
             android:name=".activity.LaunchActivity"
-            android:launchMode="singleTask">
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,7 +83,8 @@
             android:process=":remote"></service>
 
         <activity android:name=".activity.ChatActivity"
-            android:theme="@style/Light.NoActionBar">
+            android:theme="@style/Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
     </application>
 

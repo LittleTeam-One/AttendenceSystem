@@ -30,8 +30,9 @@ public class SearchFriendsAndGroupActivity extends AppCompatActivity {
         mSearchView.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
             @Override
             public void onHomeClicked() {
-                Intent intent = new Intent(SearchFriendsAndGroupActivity.this ,MainActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(SearchFriendsAndGroupActivity.this ,MainActivity.class);
+                startActivity(intent);*/
+                finish();
             }
         });
     }
