@@ -1,6 +1,8 @@
 package com.example.mrc.attendencesystem.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +33,11 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Text;
 import com.baidu.mapapi.model.LatLng;
 import com.example.mrc.attendencesystem.R;
 
-public class LocationActivity extends AppCompatActivity implements SensorEventListener {
+public class LocationActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
     // 定位相关
     LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
@@ -56,10 +58,13 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
     // UI相关
     RadioGroup.OnCheckedChangeListener radioButtonListener;
     TextView requestLocButton;
+    TextView mTvCancel ,mTvOk;
+
     boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
     private float direction;
 
+    @SuppressLint("CutPasteId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +78,10 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
         }
         setContentView(R.layout.activity_location);
         requestLocButton = (TextView) findViewById(R.id.button1);
+        mTvOk = (TextView)findViewById(R.id.tv_ok);
+        mTvCancel = (TextView)findViewById(R.id.tv_cancel);
+        mTvOk.setOnClickListener(this);
+        mTvCancel.setOnClickListener(this);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//获取传感器管理服务
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
         requestLocButton.setText("普通");
@@ -167,6 +176,25 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    /**
+     * 确认和取消按钮的点击事件监听
+     * @author  cqx
+     * create at 2018/5/22 23:03
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_ok :
+                finish();
+                break;
+            case R.id.tv_cancel :
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     /**

@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mrc.attendencesystem.R;
@@ -21,6 +23,9 @@ import com.example.mrc.attendencesystem.activity.LocationActivity;
 public class SettingsFragment extends Fragment {
     static Context mContext;
     private Button mBtnMap;
+    TextView mTvLogout ,mTvQuitApp;
+    LinearLayout mLinearLayoutRight;
+    ImageView mImgRightSettingsMore;
 
     public static SettingsFragment newInstance(String param1 , Context context) {
         SettingsFragment fragment = new SettingsFragment();
@@ -53,7 +58,41 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        findView(view);
         return view;
+    }
+
+    void findView(View view){
+        mImgRightSettingsMore = (ImageView)view.findViewById(R.id.img_right_settings_more);
+        mTvLogout = (TextView)view.findViewById(R.id.tv_right_logout);
+        mTvQuitApp = (TextView)view.findViewById(R.id.tv_right_quit_app);
+        mLinearLayoutRight = (LinearLayout)view.findViewById(R.id.ll_right_click);
+        setListener();
+    }
+    void setListener(){
+        mImgRightSettingsMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mLinearLayoutRight.getVisibility() == View.VISIBLE){
+                    mLinearLayoutRight.setVisibility(View.GONE);
+                }else {
+                    mLinearLayoutRight.setVisibility(View.VISIBLE);
+                    mLinearLayoutRight.bringToFront();//显示在最上层
+                }
+            }
+        });
+
+        mTvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mTvQuitApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 }

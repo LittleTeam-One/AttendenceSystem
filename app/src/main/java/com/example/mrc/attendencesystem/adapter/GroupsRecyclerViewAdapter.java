@@ -49,6 +49,30 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
         return mGroupsItemData.size();
     }
 
+    /*
+    * 点击事件的接口，方法
+    * */
+    private OnItemClickListenerGroup listener;
+
+    public interface OnItemClickListenerGroup {
+        void onItemClickGroup(View itemView, int position);
+    }
+    public void setOnItemClickListenerGroup(OnItemClickListenerGroup listener) {
+        this.listener = listener;
+    }
+
+    /*
+    * 长按事件的接口，方法
+    * */
+    private OnItemLongClickListenerGroup longListener;
+
+    public interface OnItemLongClickListenerGroup{
+        void onItemLongClickGroup(View itemView, int position);
+    }
+    public void setOnItemLongClickListenerGroup(OnItemLongClickListenerGroup longListener) {
+        this.longListener = longListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder  {
         public ImageView mImageIcon;
         public TextView mUserName;
@@ -58,6 +82,40 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
             mImageIcon = (ImageView) viewHolder.findViewById(R.id.img_icon);
             mUserName = (TextView) viewHolder.findViewById(R.id.tv_username);
             mActiveTime = (TextView) viewHolder.findViewById(R.id.tv_active_time);
+
+            viewHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClickGroup(view, position);
+                        }
+                    }
+                }
+            });
+            viewHolder.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (longListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            longListener.onItemLongClickGroup(viewHolder, position);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
+    }
+
+    //  删除数据
+    public void removeData(int position) {
+        mGroupsItemData.remove(position);
+        //删除动画
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 }

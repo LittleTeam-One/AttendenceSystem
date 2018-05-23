@@ -21,8 +21,8 @@
         android:layout_toEndOf="@+id/img_icon"
         android:layout_toRightOf="@+id/img_icon"
         android:text="周玉欣"
-        android:textColor="@color/simple_black"
-        android:textSize="@dimen/font_size_20sp" />
+        android:textColor="@color/font_color_more_light_black"
+        android:textSize="@dimen/font_size_18sp" />
 
     <TextView
         android:id="@+id/tv_active_time"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/tv_username"
         android:text="最新活跃时间：星期一"
         android:textColor="@color/hint_color"
-        android:textSize="@dimen/font_size_15sp" />
+        android:textSize="@dimen/font_size_14sp" />
     <View
         android:layout_width="match_parent"
         android:layout_height="0.75dp"

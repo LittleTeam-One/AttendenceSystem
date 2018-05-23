@@ -109,6 +109,7 @@
             android:background="@color/white">
 
             <TextView
+                android:id="@+id/tv_cancel"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -124,11 +125,12 @@
             <View
                 android:id="@+id/view_line"
                 android:layout_width="0.75dp"
-                android:layout_height="48dp"
+                android:layout_height="36dp"
                 android:layout_centerInParent="true"
                 android:background="@color/view_color" />
 
             <TextView
+                android:id="@+id/tv_ok"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

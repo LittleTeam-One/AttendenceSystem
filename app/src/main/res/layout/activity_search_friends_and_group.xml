@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.mrc.attendencesystem.activity.SearchFriendsAndGroupActivity">
     <com.arlib.floatingsearchview.FloatingSearchView
+        android:backgroundTint="@color/white"
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
