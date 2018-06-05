@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +29,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private ContactsFragment mContactsFragment;
     private SettingsFragment mSettingsFragment;
     private Toolbar mToolBar;
+    public static String mPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent =getIntent();
+        mPhoneNumber = intent.getStringExtra("phoneNumber");
         setContentView(R.layout.activity_main);
         findView();  //初始化
     }
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 break;
             case 1:
                 if (mContactsFragment == null) {
-                    mContactsFragment = ContactsFragment.newInstance("联系人" ,this);
+                    mContactsFragment = ContactsFragment.newInstance("联系人" ,this ,mPhoneNumber);
                 }
                 transaction.replace(R.id.tb, mContactsFragment);
                 break;

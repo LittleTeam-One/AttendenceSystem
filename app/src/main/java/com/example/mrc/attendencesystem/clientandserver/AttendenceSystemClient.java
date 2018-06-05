@@ -1,8 +1,11 @@
 package com.example.mrc.attendencesystem.clientandserver;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.mrc.attendencesystem.activity.LaunchActivity;
+import com.example.mrc.attendencesystem.entity.GroupsItem;
+import com.example.mrc.attendencesystem.entity.GroupsMsgContent;
 import com.example.mrc.attendencesystem.entity.Message;
 import com.example.mrc.attendencesystem.entity.MessageType;
 import com.example.mrc.attendencesystem.entity.User;
@@ -13,8 +16,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-
-import static com.mob.tools.utils.DeviceHelper.getApplication;
 
 /**
  * Created by Mr.C on 2018/4/18.
@@ -81,4 +82,56 @@ public class AttendenceSystemClient {
         }
         return b;
     }
+
+    /**
+     * 获取群组的列表
+     * @author  cqx
+     * create at 2018/5/29 19:21
+     */
+    public List<GroupsItem> sendGroupsListRequest(Object obj){
+
+        List<GroupsItem> groupsItemList = null;
+        try {
+            s = SocketConnectService.getSocket();
+            if(s == null){
+                Log.d("cqx" ,"请求失败！");
+            }
+            ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
+            oos.writeObject(obj);
+            ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
+            groupsItemList =(List<GroupsItem>) ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return groupsItemList;
+    }
+
+    /**
+     * 获取群聊天记录的请求接口
+     * @author  cqx
+     * create at 2018/5/29 19:22
+     */
+    public List<GroupsMsgContent> sendGroupsMsgRequest(Object obj){
+
+        List<GroupsMsgContent> groupsMsgList = null;
+        try {
+            s = SocketConnectService.getSocket();
+            if(s == null){
+                Log.d("cqx" ,"请求失败！");
+            }
+            ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
+            oos.writeObject(obj);
+            ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
+            groupsMsgList = (List<GroupsMsgContent>) ois.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return groupsMsgList;
+    }
+
+
 }

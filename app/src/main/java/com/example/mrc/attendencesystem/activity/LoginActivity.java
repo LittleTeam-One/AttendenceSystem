@@ -138,7 +138,9 @@ public class LoginActivity extends AppCompatActivity {
                             boolean b=login(username, password);
                             if(b){
                                 //转到主界面
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Intent intent =new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("phoneNumber" ,username);
+                                startActivity(intent);
                             }else {
                                 //子线程不能运行Toast，需要推到子线程里
                                 Handler handlerThree=new Handler(Looper.getMainLooper());

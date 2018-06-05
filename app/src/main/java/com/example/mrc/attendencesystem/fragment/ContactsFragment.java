@@ -21,8 +21,11 @@ import com.example.mrc.attendencesystem.activity.CreateGroupsActivity;
 import com.example.mrc.attendencesystem.activity.SearchFriendsAndGroupActivity;
 import com.example.mrc.attendencesystem.adapter.FriendsRecyclerViewAdapter;
 import com.example.mrc.attendencesystem.adapter.GroupsRecyclerViewAdapter;
+import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
 import com.example.mrc.attendencesystem.entity.FriendsItem;
 import com.example.mrc.attendencesystem.entity.GroupsItem;
+import com.example.mrc.attendencesystem.entity.MessageItem;
+import com.example.mrc.attendencesystem.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener,
         FriendsRecyclerViewAdapter.OnItemClickListener, FriendsRecyclerViewAdapter.OnItemLongClickListener,
         GroupsRecyclerViewAdapter.OnItemClickListenerGroup, GroupsRecyclerViewAdapter.OnItemLongClickListenerGroup{
     static Context mContext;
+    static String mPhoneNumber;
     private LinearLayout mTvAddFriendsAndGroups ,mTvCreateGroup;
     private LinearLayout mLLFriends ,mLLGroups;
     private RecyclerView mRecyclerViewFriends ,mRecyclerViewGroups;
@@ -45,9 +49,10 @@ public class ContactsFragment extends Fragment implements View.OnClickListener,
     private List<FriendsItem> mFriendsData =new ArrayList<>();
     private List<GroupsItem> mGroupsData =new ArrayList<>();
 
-    public static ContactsFragment newInstance(String param1 , Context context) {
+    public static ContactsFragment newInstance(String param1 , Context context ,String phoneNumber) {
         ContactsFragment fragment = new ContactsFragment();
         mContext = context;
+        mPhoneNumber = phoneNumber;
         Bundle args = new Bundle();
         args.putString("agrs1", param1);
         fragment.setArguments(args);
@@ -99,14 +104,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener,
             mFriendsData.add(friendsItem);
         }
 
-        mGroupsData.clear();
-        for(int i = 1;i <= 15 ;i++){
-            GroupsItem groupsItem =new GroupsItem();
-            groupsItem.setUsername("周玉欣"+i);
-            groupsItem.setActiveTime("星期一");
-            groupsItem.setImgSrc("");
-            mGroupsData.add(groupsItem);
-        }
+        mGroupsData = initGroupsList(mPhoneNumber);
         mGroupsRecyclerViewAdapter = new GroupsRecyclerViewAdapter(mContext , mGroupsData);
         mRecyclerViewGroups.setAdapter(mGroupsRecyclerViewAdapter);
     }
@@ -150,6 +148,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener,
                 }else {
                     mRecyclerViewGroups.setVisibility(View.VISIBLE);
                     //初始化群组列表
+                    mGroupsData = initGroupsList(mPhoneNumber);
                     mGroupsRecyclerViewAdapter = new GroupsRecyclerViewAdapter(mContext , mGroupsData);
                     mGroupsRecyclerViewAdapter.setOnItemClickListenerGroup(this);
                     mGroupsRecyclerViewAdapter.setOnItemLongClickListenerGroup(this);
@@ -249,5 +248,25 @@ public class ContactsFragment extends Fragment implements View.OnClickListener,
                 });
         // 显示
         normalDialog.show();
+    }
+
+    /**
+     * 获取群组消息列表
+     * @author  cqx
+     * create at 2018/5/29 19:42
+     */
+    public List<GroupsItem> initGroupsList(String phoneNumber){
+        mGroupsData.clear();
+        final User user =new User();
+        user.setPhoneNumber(phoneNumber);
+        user.setOperation("getGroupsList");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mGroupsData = new AttendenceSystemClient(mContext).sendGroupsListRequest(user);
+            }
+        });
+        thread.start();
+        return mGroupsData;
     }
 }
