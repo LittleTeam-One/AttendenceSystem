@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.mrc.attendencesystem.AttendenceSystem;
 import com.example.mrc.attendencesystem.AttendenceSystemApplication;
+import com.example.mrc.attendencesystem.entity.GroupRequest;
+import com.example.mrc.attendencesystem.entity.GroupSignInMessage;
 import com.example.mrc.attendencesystem.entity.TranObject;
 import com.example.mrc.attendencesystem.entity.TranObjectType;
 import com.example.mrc.attendencesystem.entity.User;
@@ -322,7 +324,7 @@ public class ClientUtil {
      * mqh
      * 获取群聊天记录
      */
-    public static void getGroupChatRecord(String groupid, AttendenceSystemApplication application) {
+    public static void getGroupChatRecord(int groupid, AttendenceSystemApplication application ,int page) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -332,7 +334,32 @@ public class ClientUtil {
         {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.GET_GROUP_CHAT_RECORD);
+            TranObject o = new TranObject(TranObjectType.GET_GROUP_MESSAGE);
+            o.setToUser(String.valueOf(groupid));
+            GroupRequest groupRequest =new GroupRequest();
+            groupRequest.setGroupId(groupid);
+            groupRequest.setCurrentPage(page);
+            o.setRequest(groupRequest);
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+    }
+
+    /**
+     * mqh
+     * 发送群聊天记录
+     */
+    public static void sendGroupChatRecord(String groupid, AttendenceSystemApplication application , String phoneNumber ,String content, int type , GroupSignInMessage groupSignInMessage) {
+
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()  //格式化输出（序列化）
+                .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.GET_GROUP_MESSAGE);
             o.setToUser(groupid);
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);

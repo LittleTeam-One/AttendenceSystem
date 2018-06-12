@@ -47,8 +47,8 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
     private FriendsRecyclerViewAdapter mFriendsRecyclerViewAdapter;
     private GroupsRecyclerViewAdapter mGroupsRecyclerViewAdapter;
     private LinearLayoutManager mFriendsLinearLayoutManager ,mGroupsLinearLayoutManager;
-    private List<FriendsItem> mFriendsData =new ArrayList<>();
-    private List<Group> mGroupsData =new ArrayList<>();
+    private static List<FriendsItem> mFriendsData =new ArrayList<>();
+    private static List<Group> mGroupsData =new ArrayList<>();
     private SharedPreferences sp;
     private AttendenceSystemApplication application;
     public static Group groupClick = null;
@@ -173,18 +173,24 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
     }
 
     /**
-     * 联系人列表的点击事件监听
+     * 群组列表的点击事件监听
      * @author  cqx
      * create at 2018/5/23 0:58
      */
     @Override
     public void onItemClickGroup(View itemView, int position) {
-        Intent toChatIntent = new Intent(mContext , ChatActivity.class);
+        Intent toChatIntent = new Intent(getActivity() , ChatActivity.class);
+        groupClick = mGroupsData.get(position);
+        Log.d("dddddd" ,mGroupsData.size()+"");
+        int type = 1;      //类型是1表示群聊，2表示好友聊天
+        toChatIntent.putExtra("type" ,type);
+        toChatIntent.putExtra("groupid" ,groupClick.getGroupId());
         startActivity(toChatIntent);
+
     }
 
     /**
-     * 联系人列表的长按事件监听
+     * 群组列表的长按事件监听
      * @author  cqx
      * create at 2018/5/23 0:59
      */
@@ -213,21 +219,18 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
     }
 
     /**
-     * 群组列表的点击事件监听
+     * 联系人列表的点击事件监听
      * @author  cqx
      * create at 2018/5/23 1:12
      */
     @Override
     public void onItemClick(View itemView, int position) {
         Intent toChatIntent = new Intent(mContext , ChatActivity.class);
-        groupClick = mGroupsData.get(position);
-        int type = 1;      //类型是1表示群聊，2表示好友聊天
-        toChatIntent.putExtra("type" ,type);
         startActivity(toChatIntent);
     }
 
     /**
-     * 群组列表的长按事件监听
+     * 联系人列表的长按事件监听
      * @author  cqx
      * create at 2018/5/23 1:13
      */

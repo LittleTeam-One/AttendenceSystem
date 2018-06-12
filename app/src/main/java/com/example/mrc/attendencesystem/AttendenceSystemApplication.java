@@ -28,7 +28,7 @@ public class AttendenceSystemApplication extends MobApplication {
     private static Map<String, Activity> destroyMap = new HashMap<>();
     private boolean isClientStart;// 客户端连接是否启动
     private Client client;
-    private String ip = "192.168.1.130";//实验室ip
+    private String ip = "192.168.1.127";//实验室ip
     private int port = 5469;
     @Override
     public void onCreate() {

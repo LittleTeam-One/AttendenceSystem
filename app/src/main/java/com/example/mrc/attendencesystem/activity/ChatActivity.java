@@ -4,12 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,9 +22,9 @@ import com.example.mrc.attendencesystem.AttendenceSystemApplication;
 import com.example.mrc.attendencesystem.R;
 import com.example.mrc.attendencesystem.adapter.ChatLogRecyclerViewAdapter;
 import com.example.mrc.attendencesystem.clientandserver.ClientUtil;
-import com.example.mrc.attendencesystem.entity.Group;
+import com.example.mrc.attendencesystem.entity.GroupMessage;
+import com.example.mrc.attendencesystem.entity.GroupSignInMessage;
 import com.example.mrc.attendencesystem.entity.TranObject;
-import com.example.mrc.attendencesystem.fragment.ContactsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,30 +39,38 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     LinearLayoutManager mLayoutManager;
     ChatLogRecyclerViewAdapter mChatLogRecyclerViewAdapter;
     public static Context mContext;
-
+    private SharedPreferences sp;
     private RelativeLayout root_view;
     private int screenHeight = 0;
     private int keyHeight = 0;
-    private Group group;
+    private int groupid;
     private static int type;
     private AttendenceSystemApplication application;
+    static String phoneNumber ;
+    static List<String> mData = new ArrayList<>();
 
-    List<String> mData = new ArrayList<>();
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        mContext =this;
         application = (AttendenceSystemApplication)getApplicationContext();
+        sp = mContext.getSharedPreferences(AttendenceSystemApplication.SHARED_PREF,0);
+        phoneNumber = sp.getString(AttendenceSystemApplication.USER_PHONE,"");
         Intent intent = getIntent();
         type = intent.getIntExtra("type" ,-1);
+
+        /*群聊*/
         if(type == 1){
-            group = ContactsFragment.groupClick;
+            groupid = intent.getIntExtra("groupid" ,-1);
         }else if(type == 2){
 
         }else if(type == -1){
             finish();
         }
-        mContext =this;
         findView();
         init();
     }
@@ -93,8 +102,9 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mBtnSendMessage.setClickable(false);
         mLayoutManager = new LinearLayoutManager(mContext);
         mChatLogRecyclerView.setLayoutManager(mLayoutManager);
-        if(type == 1){
-            ClientUtil.getGroupChatRecord(group.getGroupId(),application);
+        Log.d("ddddddd" ,groupid +"");
+        if(type == 1){   /*群聊*/
+            ClientUtil.getGroupChatRecord(groupid,application ,0);
         }else if(type == 2){
 
         }
@@ -139,6 +149,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 startActivity(toSetLocationIntent);
                 break;
             case R.id.btn_send_message :
+                if(type == 1){   /*群聊*/
+                    String content = mEtSendMessage.getText().toString();
+                    GroupSignInMessage groupSignInMessage =new GroupSignInMessage();
+                    /*ClientUtil.sendGroupChatRecord(group.getGroupId() ,application ,phoneNumber ,content,type , groupSignInMessage);*/
+                }else if(type == 2){
+
+                }
                 mData.add("2" + mEtSendMessage.getText());
                 mEtSendMessage.setText(null);
                 scrollToLastItem();
@@ -245,8 +262,33 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void getMessage(TranObject msg) {
+        Log.d("ddddd" ,"groupMessageArrayList" + msg);
         if(msg != null){
+            switch (msg.getType()){
+                /*获取聊天记录*/
+                case GET_GROUP_MESSAGE:
+                    if(msg.isSuccess()){
+                        ArrayList<GroupMessage> groupMessageArrayList = msg.getGroupMessageArrayList();
 
+                        for(int i =0 ;i<groupMessageArrayList.size();i++){
+                            mData.add(groupMessageArrayList.get(i).getContent());
+                        }
+                        mChatLogRecyclerViewAdapter = new ChatLogRecyclerViewAdapter(mContext , mData);
+                        mChatLogRecyclerViewAdapter.setOnItemClickListener(this);
+                        mChatLogRecyclerViewAdapter.setOnItemLongClickListener(this);
+                        mChatLogRecyclerView.setAdapter(mChatLogRecyclerViewAdapter);
+                    }
+                    break;
+                /*发送聊天记录给服务器端*/
+                case SENT_GROUP_MESSAGE:
+                    if(msg.isSuccess()){
+
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
+
 }

@@ -16,6 +16,25 @@ public class TranObject implements Serializable {
     private Message message;//传输的消息对象
     private GroupSignInMessage signInfo;//签到信息
     private ArrayList<Message> groupMessages;//消息集合
+    private GroupRequest request;//群请求类
+    private ArrayList<GroupMessage> groupMessageArrayList;
+
+    public ArrayList<GroupMessage> getGroupMessageArrayList() {
+        return groupMessageArrayList;
+    }
+
+    public void setGroupMessageArrayList(ArrayList<GroupMessage> groupMessageArrayList) {
+        this.groupMessageArrayList = groupMessageArrayList;
+    }
+
+    public GroupRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(GroupRequest request) {
+        this.request = request;
+    }
+
 
     public ArrayList<GroupSignInMessage> getSignInfoslist() {
         return signInfoslist;
