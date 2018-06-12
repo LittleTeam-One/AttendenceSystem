@@ -8,7 +8,6 @@ import java.io.Serializable;
  */
 
 public class Message implements Serializable{
-    private static final long serialVersionUID = 2L;
     String type;
     String sender;
     String senderNick;
@@ -16,6 +15,7 @@ public class Message implements Serializable{
     String receiver;
     String content;
     String sendTime;
+    int groupid;
 
     public String getType() {
         return type;
@@ -58,5 +58,13 @@ public class Message implements Serializable{
     }
     public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public int getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(int groupid) {
+        this.groupid = groupid;
     }
 }

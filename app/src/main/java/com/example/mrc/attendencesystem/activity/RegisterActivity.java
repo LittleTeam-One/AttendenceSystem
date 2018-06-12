@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mrc.attendencesystem.R;
-import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
 import com.example.mrc.attendencesystem.entity.User;
 
 import java.util.regex.Matcher;
@@ -181,7 +180,6 @@ public class RegisterActivity extends AppCompatActivity {
                 User user=new User();
                 user.setId(-1);
                 user.setPhoneNumber(mUsernameEdit.getText().toString());
-                user.setEmail("");
                 user.setPassword(mPassword.getText().toString());
                 user.setUserName("");
                 user.setGender(-1);
@@ -190,8 +188,8 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setAge(-1);
                 user.setStudentId(mStudentNumber.getText().toString());
                 user.setOperation("register");
-                boolean b = new AttendenceSystemClient(RegisterActivity.this).sendRegisterInfo(user);
-                if(b){
+                //boolean b = new AttendenceSystemClient(RegisterActivity.this).sendRegisterInfo(user);
+                if(true){
                     //注册成功跳转到登陆
                     Handler handlerThree=new Handler(Looper.getMainLooper());
                     handlerThree.post(new Runnable(){

@@ -17,13 +17,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.mrc.attendencesystem.AttendenceSystemApplication;
 import com.example.mrc.attendencesystem.R;
 import com.example.mrc.attendencesystem.adapter.ChatLogRecyclerViewAdapter;
+import com.example.mrc.attendencesystem.clientandserver.ClientUtil;
+import com.example.mrc.attendencesystem.entity.Group;
+import com.example.mrc.attendencesystem.entity.TranObject;
+import com.example.mrc.attendencesystem.fragment.ContactsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher,
+public class ChatActivity extends BaseActivity implements View.OnClickListener, TextWatcher,
         ChatLogRecyclerViewAdapter.OnItemClickListener, ChatLogRecyclerViewAdapter.OnItemLongClickListener{
     ImageView mImgTurnBack ,mImgInformation ,mImgLocation ,mImgSetLocation;
     TextView mTvName ;
@@ -37,13 +42,25 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout root_view;
     private int screenHeight = 0;
     private int keyHeight = 0;
-
+    private Group group;
+    private static int type;
+    private AttendenceSystemApplication application;
 
     List<String> mData = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        application = (AttendenceSystemApplication)getApplicationContext();
+        Intent intent = getIntent();
+        type = intent.getIntExtra("type" ,-1);
+        if(type == 1){
+            group = ContactsFragment.groupClick;
+        }else if(type == 2){
+
+        }else if(type == -1){
+            finish();
+        }
         mContext =this;
         findView();
         init();
@@ -76,8 +93,13 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         mBtnSendMessage.setClickable(false);
         mLayoutManager = new LinearLayoutManager(mContext);
         mChatLogRecyclerView.setLayoutManager(mLayoutManager);
+        if(type == 1){
+            ClientUtil.getGroupChatRecord(group.getGroupId(),application);
+        }else if(type == 2){
 
-        mData.clear();
+        }
+
+        /*mData.clear();
         for(int i = 0;i<15;i++){
             if(i%2 ==0)
                 mData.add(String.valueOf(1));
@@ -87,7 +109,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         mChatLogRecyclerViewAdapter = new ChatLogRecyclerViewAdapter(mContext , mData);
         mChatLogRecyclerViewAdapter.setOnItemClickListener(this);
         mChatLogRecyclerViewAdapter.setOnItemLongClickListener(this);
-        mChatLogRecyclerView.setAdapter(mChatLogRecyclerViewAdapter);
+        mChatLogRecyclerView.setAdapter(mChatLogRecyclerViewAdapter);*/
         scrollToLastItem();
         initListener();
         initOtherData();
@@ -219,5 +241,12 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 });
         // 显示
         normalDialog.show();
+    }
+
+    @Override
+    public void getMessage(TranObject msg) {
+        if(msg != null){
+
+        }
     }
 }
