@@ -9,8 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mrc.attendencesystem.R;
-import com.example.mrc.attendencesystem.entity.GroupsItem;
+import com.example.mrc.attendencesystem.entity.Group;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,9 +21,9 @@ import java.util.List;
 public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecyclerViewAdapter.ViewHolder>{
     private Context mContext;
     private LayoutInflater mInflater;
-    List<GroupsItem> mGroupsItemData;
+    List<Group> mGroupsItemData;
 
-    public GroupsRecyclerViewAdapter(Context context ,List<GroupsItem> groupsItemsData){
+    public GroupsRecyclerViewAdapter(Context context ,List<Group> groupsItemsData){
         mContext = context;
         mGroupsItemData = groupsItemsData;
     }
@@ -37,10 +38,20 @@ public class GroupsRecyclerViewAdapter extends RecyclerView.Adapter<GroupsRecycl
 
     @Override
     public void onBindViewHolder(GroupsRecyclerViewAdapter.ViewHolder holder, int position) {
-        GroupsItem groupsItem = mGroupsItemData.get(position);
+        Group groupsItem = mGroupsItemData.get(position);
         //holder.mImageIcon.setImageDrawable();
-        holder.mUserName.setText(groupsItem.getUsername());
-        holder.mActiveTime.setText(groupsItem.getActiveTime());
+        holder.mUserName.setText(groupsItem.getGroupName());
+        Calendar calendar = Calendar.getInstance();
+        String y = String.valueOf(calendar.get(Calendar.YEAR));
+        String m = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String d = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        if((calendar.get(Calendar.MONTH) + 1)<10){
+            m = "0" +m;
+        }
+        if(calendar.get(Calendar.DAY_OF_MONTH)<10){
+            d = "0" + d;
+        }
+        holder.mActiveTime.setText(y+"." +m +"." + d);
     }
 
 

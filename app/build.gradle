@@ -34,7 +34,8 @@ android {
 }
 
 dependencies {
-    //json
+    //json0.
+    compile files('libs/java-json.jar')
     compile files('libs/gson-2.7.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.github.arimorty:floatingsearchview:2.1.1'

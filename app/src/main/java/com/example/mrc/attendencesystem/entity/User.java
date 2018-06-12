@@ -8,10 +8,9 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable{
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 11L;
     private int id ;
     private String phoneNumber ;
-    private String email ;
     private String password;
     private String userName;
     private int gender;
@@ -20,6 +19,18 @@ public class User implements Serializable{
     private int age;
     private String studentId;
     private String operation;
+
+
+    //登录
+    public User(String phoneNumber, String password)
+    {
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     public int getId() {
         return id;
@@ -83,14 +94,6 @@ public class User implements Serializable{
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getStudentId() {

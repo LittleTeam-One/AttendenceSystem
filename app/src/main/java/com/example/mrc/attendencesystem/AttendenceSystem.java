@@ -2,7 +2,7 @@ package com.example.mrc.attendencesystem;
 
 public class AttendenceSystem {
     //保存一些配置信息或者全局变量
-    public static final String hostname = "192.168.1.110";
+    public static final String hostname = "192.168.1.130";
     public static final int port = 5469;
     public static final int timeout = 20000;
     public static final String SERVER_IP = "39.106.42.190";// 服务器ip

@@ -3,21 +3,17 @@ package com.example.mrc.attendencesystem.entity;
 import java.io.Serializable;
 
 public class Group implements Serializable{
-    private static final long serialVersionUID = 11L;
-    int groupId;
+    //private static final long serialVersionUID = 11L;
+    String groupId;
     String groupName;
     String introdue;
     int adminId;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 

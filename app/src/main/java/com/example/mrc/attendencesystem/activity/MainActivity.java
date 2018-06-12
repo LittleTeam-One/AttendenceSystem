@@ -1,22 +1,17 @@
 package com.example.mrc.attendencesystem.activity;
 
-import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+
 import android.widget.Toolbar;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.mrc.attendencesystem.R;
+
 import com.example.mrc.attendencesystem.fragment.ContactsFragment;
 import com.example.mrc.attendencesystem.fragment.MessageFragment;
 import com.example.mrc.attendencesystem.fragment.SettingsFragment;
@@ -78,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 if (mContactsFragment == null) {
                     mContactsFragment = ContactsFragment.newInstance("联系人" ,this ,mPhoneNumber);
                 }
-                transaction.replace(R.id.tb, mContactsFragment);
+                transaction.replace(R.id.tb ,mContactsFragment);
                 break;
             case 2:
                 if (mSettingsFragment == null) {

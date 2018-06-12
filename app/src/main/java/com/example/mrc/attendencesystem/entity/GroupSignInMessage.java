@@ -2,7 +2,7 @@ package com.example.mrc.attendencesystem.entity;
 
 import java.io.Serializable;
 
-public class GroupSignInMessage {
+public class GroupSignInMessage implements Serializable{
     private int recordId;//在群消息中id
     private int groupId;//群Id
     private int originatorId;//发起人Id

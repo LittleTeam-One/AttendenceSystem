@@ -5,30 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
-import android.provider.SyncStateContract;
-import android.util.JsonReader;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.example.mrc.attendencesystem.AttendenceSystem;
 import com.example.mrc.attendencesystem.AttendenceSystemApplication;
 import com.example.mrc.attendencesystem.clientandserver.Client;
 import com.example.mrc.attendencesystem.clientandserver.ClientInputThread;
+import com.example.mrc.attendencesystem.clientandserver.ClientOutputThread;
 import com.example.mrc.attendencesystem.clientandserver.MessageListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.mrc.attendencesystem.entity.TranObject;
+import com.example.mrc.attendencesystem.entity.TranObjectType;
+import com.example.mrc.attendencesystem.entity.User;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.StringReader;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 public class SocketConnectService extends Service {
     private static final int MSG = 1000;
@@ -48,6 +46,13 @@ public class SocketConnectService extends Service {
     public SocketConnectService() {
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application = (AttendenceSystemApplication) this.getApplicationContext();
+        mSharedPreferences = getSharedPreferences(AttendenceSystemApplication.SHARED_PREF,0);
+        client = application.getClient();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -72,7 +77,7 @@ public class SocketConnectService extends Service {
                             // Log.d("client", "onStartCommand:msg " +msg);
                             JsonReader jsonReader = new JsonReader(new StringReader(msg));//其中jsonContext为String类型的Json数据
                             jsonReader.setLenient(true);
-                            Attendence responseObject = gson.fromJson(jsonReader,TranObject.class);
+                            TranObject responseObject = gson.fromJson(jsonReader,TranObject.class);
                             if(responseObject!=null && responseObject.getType() != TranObjectType.HEART_TEST)
                             {
                                 Log.d("client", "onStartCommand:msg " +msg);
@@ -90,7 +95,7 @@ public class SocketConnectService extends Service {
                                 //Log.d("client", "run: time" + (System.currentTimeMillis() - lastSendTime));
                                 //Log.d("client", "run: 开始发送心跳包数据");
                                 TranObject tranObject =  new TranObject(TranObjectType.HEART_TEST);
-                                String userId = mSharedPreferences.getString(MyApplication.USER_ID,null);
+                                String userId = mSharedPreferences.getString(AttendenceSystemApplication.USER_ID,null);
                                 // Log.d("client", "run: userId" + userId);
                                 tranObject.setFromUser(userId);
                                 //得到写线程发送心跳包

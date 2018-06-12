@@ -2,17 +2,13 @@ package com.example.mrc.attendencesystem.clientandserver;
 
 import android.util.Log;
 
-import com.example.ecxkj.helloclass.Activity.application.MyApplication;
-import com.example.ecxkj.helloclass.Activity.bean.Group;
-import com.example.ecxkj.helloclass.Activity.bean.Message;
-import com.example.ecxkj.helloclass.Activity.bean.User;
-import com.example.ecxkj.helloclass.Activity.util.TranObject;
-import com.example.ecxkj.helloclass.Activity.util.TranObjectType;
+import com.example.mrc.attendencesystem.AttendenceSystem;
+import com.example.mrc.attendencesystem.AttendenceSystemApplication;
+import com.example.mrc.attendencesystem.entity.TranObject;
+import com.example.mrc.attendencesystem.entity.TranObjectType;
+import com.example.mrc.attendencesystem.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**
@@ -22,7 +18,7 @@ import java.util.Date;
  */
 public class ClientUtil {
 
-	public static void checkLogin(User user, MyApplication application)
+	public static void checkLogin(User user, AttendenceSystemApplication application)
     {
         Log.d("client", "checkLogin: ");
         Gson mGson = new GsonBuilder()
@@ -36,7 +32,7 @@ public class ClientUtil {
             ClientOutputThread out = client.getClientOutputThread();
             TranObject o = new TranObject(TranObjectType.LOGIN);
             User u = new User();
-            u.setPhone(user.getPhone());
+            u.setPhoneNumber(user.getPhoneNumber());
             u.setPassword(user.getPassword());
             o.setUser(u);
             String responseString = mGson.toJson(o);
@@ -52,7 +48,7 @@ public class ClientUtil {
      *
      * @param phone
      */
-    public static void isRegisterOrNot(String phone, MyApplication application) {
+    /*public static void isRegisterOrNot(String phone, MyApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -71,12 +67,12 @@ public class ClientUtil {
 
     }
 
-    /**
+    *//**
      * mqh
      *
-     */
+     *//*
     public static void registerUser(String password, String phone, String nickName,
-    MyApplication application) {
+    AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -94,11 +90,11 @@ public class ClientUtil {
         }
 
     }
-    /**
+    *//**
      * mqh
      *
-     */
-    public static void resetPassword(String phone, String password, MyApplication application) {
+     *//*
+    public static void resetPassword(String phone, String password, AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -115,12 +111,12 @@ public class ClientUtil {
         }
     }
 
+    */
     /**
      *
      */
-    public static void getGroups(String stuId,MyApplication application)
+    public static void getGroups(String stuId,AttendenceSystemApplication application)
     {
-
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -139,7 +135,8 @@ public class ClientUtil {
     /**
      *
      */
-    public static void addGroup(String groupOwner,String groupName,MyApplication application)
+    /*
+    public static void addGroup(String groupOwner,String groupName,AttendenceSystemApplication application)
     {
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -157,10 +154,10 @@ public class ClientUtil {
         }
 
     }
-    /**
+    *//**
      *删除群
-     */
-    public static void deleteGroup(String groupId,MyApplication application)
+     *//*
+    public static void deleteGroup(String groupId,AttendenceSystemApplication application)
     {
 
         Gson mGson = new GsonBuilder()
@@ -178,10 +175,10 @@ public class ClientUtil {
         }
 
     }
-    /**
+    *//**
      *tuichu
-     */
-    public static void outGroup(String groupId,String stuId,MyApplication application)
+     *//*
+    public static void outGroup(String groupId,String stuId,AttendenceSystemApplication application)
     {
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -200,10 +197,10 @@ public class ClientUtil {
 
     }
 
-    /**
+    *//**
      *搜索群
-     */
-    public static void searchGroup(String groupName,MyApplication application)
+     *//*
+    public static void searchGroup(String groupName,AttendenceSystemApplication application)
     {
 
         Gson mGson = new GsonBuilder()
@@ -222,10 +219,10 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    /**
+    *//**
      * mqh
      *
-     */
+     *//*
     public static void updateUser(User user, MyApplication application) {
 
         Gson mGson = new GsonBuilder()
@@ -242,11 +239,11 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    /**
+    *//**
      * mqh
      * 上传图片请求服务器
-     */
-    public static void updateImagePassword(String stuId, String imagePath, MyApplication application) {
+     *//*
+    public static void updateImagePassword(String stuId, String imagePath, AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -265,12 +262,12 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    /**
+    *//**
      * mqh
      * 发送加群申请
-     */
+     *//*
     public static void sendJoinRequest(String senderid, String receiverid,int type, int groupid,String msgcontent,
-                                       MyApplication application) {
+                                       AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -292,12 +289,12 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    /**
+    *//**
      * mqh
      * 发送加入群的回应（若身份为群主）
-     */
+     *//*
     public static void sendJoinResponse(String senderid, String receiverid,int response_type, int groupid,String msgcontent,
-                                       MyApplication application) {
+                                        AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -319,11 +316,35 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
+    */
+
+    /**
+     * mqh
+     * 获取群聊天记录
+     */
+    public static void getGroupChatRecord(String groupid, AttendenceSystemApplication application) {
+
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()  //格式化输出（序列化）
+                .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.GET_GROUP_CHAT_RECORD);
+            o.setToUser(groupid);
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+    }
+
+
     /**
      * mqh
      * 获取个人签到记录
-     */
-    public static void getUserSignRecord(String senderid, String groupid, MyApplication application) {
+     *//*
+    public static void getUserSignRecord(String senderid, String groupid, AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -340,11 +361,11 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    /**
+    *//**
      * mqh
      * 获取群签到记录
-     */
-    public static void getGroupSignRecord(String groupid, MyApplication application) {
+     *//*
+    public static void getGroupSignRecord(String groupid, AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -361,10 +382,10 @@ public class ClientUtil {
         }
     }
 
-    /**
+    *//**
      * zy
      * 发起签到
-     */
+     *//*
     public static void sendSignRequest(String senderid,int groupid,String groupName,String content,int type, MyApplication application) {
 
         Gson mGson = new GsonBuilder()
@@ -389,5 +410,5 @@ public class ClientUtil {
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
-    }
+    }*/
 }

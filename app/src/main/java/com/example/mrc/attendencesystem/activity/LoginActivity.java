@@ -1,8 +1,10 @@
 package com.example.mrc.attendencesystem.activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +14,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -19,18 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mrc.attendencesystem.AttendenceSystemApplication;
 import com.example.mrc.attendencesystem.R;
-import com.example.mrc.attendencesystem.clientandserver.AttendenceSystemClient;
-import com.example.mrc.attendencesystem.clientandserver.ManageClientConServer;
-import com.example.mrc.attendencesystem.entity.Message;
-import com.example.mrc.attendencesystem.entity.MessageType;
+import com.example.mrc.attendencesystem.clientandserver.ClientUtil;
+import com.example.mrc.attendencesystem.entity.TranObject;
 import com.example.mrc.attendencesystem.entity.User;
 import com.example.mrc.attendencesystem.provider.CodeUtils;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     Toolbar toolbar;
     EditText mUsernameEdit;
     EditText mPasswordEdit;
@@ -43,11 +42,17 @@ public class LoginActivity extends AppCompatActivity {
     private String username, password, icNumber;        //用户输入的信息
     private String mAppVersion;
     Dialog dialog;
+    AttendenceSystemApplication mApplication;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mApplication = (AttendenceSystemApplication) this.getApplicationContext();
+        sp = getSharedPreferences(AttendenceSystemApplication.SHARED_PREF,0);
+        editor = sp.edit();
         findView();
         initValues();
         setListener();
@@ -82,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
+        /*toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);*/
         String appVersion = "";
         try {
             PackageManager manager = this.getPackageManager();
@@ -135,8 +140,10 @@ public class LoginActivity extends AppCompatActivity {
                     //在子线程里运行网络请求
                     Thread thread =new Thread(new Runnable(){
                         public void run() {
-                            boolean b=login(username, password);
-                            if(b){
+                            User user = new User(username,password);
+                            ClientUtil.checkLogin(user,mApplication);
+                            /*boolean b=login(username, password);*/
+                            if(true){
                                 //转到主界面
                                 Intent intent =new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("phoneNumber" ,username);
@@ -186,11 +193,61 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void getMessage(TranObject msg) {
+        if (msg != null) {
+
+            Log.d("Client", "getMessage: "+ msg);
+            switch (msg.getType()) {
+                case LOGIN:// LoginActivity只处理登录的消息
+                    Boolean isOk = msg.isSuccess();
+                    Log.d("Client", "getMessage: "+ isOk);
+                    if(msg.isSuccess())//账号密码匹配，允许登录
+                    {
+                        editor.putString(AttendenceSystemApplication.USER_PHONE,mUsernameEdit.getText().toString());
+                        editor.putString(AttendenceSystemApplication.USER_PASSWORD,mPasswordEdit.getText().toString());
+                        editor.apply();
+                        Log.d("Client", "login_success");
+
+                        /*String sqlquery = "select * from user where phone=?";
+                        Cursor cursor = dbManager.querySql(sqlquery,new String[]{sp.getString(MyApplication.USER_PHONE,"")});
+                        if(cursor.getCount() == 0){
+                            String sql1 = "insert into user values(?,?,?,?,?,?,?,?,?,?,?,?)";
+                            User user = msg.getUser();
+                            if(dbManager.executeSql(sql1,new String[]{null,user.getPassword(),user.getNickname(),user.getRealname(),
+                                    user.getGender(),user.getId(),user.getSchool(),user.getEmail(),user.getIntroduce(),user.getPhone(),
+                                    user.getImgPath(),String.valueOf(user.getLoginStatus())})){
+                                Log.d("sql1","true");
+                            }else {
+                                Log.d("sql1","false");
+                            }
+                        }
+                        while (cursor.moveToNext()){
+                            Log.d("usercontent","密码"+cursor.getString(1)+"\n"
+                                    +"手机号"+cursor.getString(9)+"\n"
+                                    +"昵称"+cursor.getString(2)+"\n");
+                        }*/
+                        Intent intent = new Intent();
+                        intent.setClass(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Log.d("Client", "login_fail");
+                        Toast.makeText(LoginActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+
     /**
      * 登录信息发送到服务端验证
      * @author  cqx
      * create at 2018/5/7 10:47
-     */
+     *//*
     boolean login(String a, String p){
         User user =new User();
         user.setPhoneNumber(a);
@@ -214,6 +271,6 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }else {
             return false;
-        }
-    }
+        }*/
+    /*}*/
 }
