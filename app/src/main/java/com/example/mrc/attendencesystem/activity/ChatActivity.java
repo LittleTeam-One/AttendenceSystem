@@ -46,7 +46,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     private int screenHeight = 0;
     private int keyHeight = 0;
     private static int groupid;
-    private static int adminId;
+    private static String adminId;
     private static String groupName;
     private static int type;
     private AttendenceSystemApplication application;
@@ -74,7 +74,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
 
         if(type == 1){
             groupid = intent.getIntExtra("groupId" ,-1);
-            adminId = intent.getIntExtra("adminId" ,-1);
+            adminId = intent.getStringExtra("adminId");
             groupName = intent.getStringExtra("groupName");
         }else if(type == 2){
 
