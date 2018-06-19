@@ -71,30 +71,8 @@ public class ClientUtil {
 
     }
 
-    *//**
-     * mqh
-     *
-     *//*
-    public static void registerUser(String password, String phone, String nickName,
-    AttendenceSystemApplication application) {
-
-        Gson mGson = new GsonBuilder()
-                .setPrettyPrinting()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
-        if(application.isClientStart())
-        {
-            Client client = application.getClient();
-            ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.REGISTER);
-            User user = new User(password,nickName,phone);
-            o.setUser(user);
-            String responseString = mGson.toJson(o);
-            out.setMsg(responseString);
-        }
-
-    }
-    *//**
+    */
+    /**
      * mqh
      *
      *//*
@@ -136,29 +114,8 @@ public class ClientUtil {
         }
 
     }
+    
     /**
-     *
-     */
-    /*
-    public static void addGroup(String groupOwner,String groupName,AttendenceSystemApplication application)
-    {
-        Gson mGson = new GsonBuilder()
-                .setPrettyPrinting()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
-        if(application.isClientStart())
-        {
-            Client client = application.getClient();
-            ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.ADD_GROUP);
-            Group group = new Group(groupName,groupOwner);
-            o.setGroup(group);
-            String responseString = mGson.toJson(o);
-            out.setMsg(responseString);
-        }
-
-    }
-    *//**
      *删除群
      *//*
     public static void deleteGroup(String groupId,AttendenceSystemApplication application)
@@ -472,5 +429,47 @@ public class ClientUtil {
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
+    }
+
+    /**
+     *注册用户
+     */
+    public static void registerUser(AttendenceSystemApplication application,
+                                    User user) {
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.REGISTER);
+            o.setUser(user);
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+    }
+
+    /**
+     *创建群组
+     */
+    public static void createGroup(AttendenceSystemApplication application ,Group group)
+    {
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.ADD_GROUP);
+            o.setGroup(group);
+            o.setFromUser(group.getAdminId());
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+
     }
 }

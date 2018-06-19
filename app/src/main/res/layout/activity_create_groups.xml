@@ -14,7 +14,7 @@
         android:background="@drawable/rectangle_border_radius_3dp"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/username_editText"
+            android:id="@+id/et_group_name"
             android:layout_width="280dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -28,11 +28,11 @@
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/rectangle_border_radius_3dp"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/student_number_editText"
+            android:id="@+id/et_group_introduce"
             android:layout_width="280dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -42,15 +42,13 @@
             android:inputType="textPassword"
             android:textColor="@color/font_color_light_blue"
             android:textSize="@dimen/font_size_15sp" />
-
     </LinearLayout>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/register_btn"
+    <Button
+        android:id="@+id/btn_create_group"
         android:layout_width="296dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/rectangle_button_style"
         android:text="创建群组"
         android:textColor="@color/white"

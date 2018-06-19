@@ -7,15 +7,18 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Image;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,6 +136,8 @@ public class GetSignMessageActivity extends BaseActivity implements SensorEventL
         mLocClient.setLocOption(option);
         mLocClient.start();
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mSignRecordRecyclerView.setLayoutManager(linearLayoutManager);
         mGroupSignRecordList = new ArrayList <>();
         mSimpleSignInRecordAdapter = new SimpleSignInRecordAdapter(GetSignMessageActivity.this ,mGroupSignRecordList);
         mSignRecordRecyclerView.setAdapter(mSimpleSignInRecordAdapter);
@@ -255,12 +260,17 @@ public class GetSignMessageActivity extends BaseActivity implements SensorEventL
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    void setMarker(double lat ,double lon){
+    void setMarker(double lat ,double lon ,int type){
 
         //设置坐标点
         LatLng point1 = new LatLng(lat, lon);
-
         View mView = LayoutInflater.from(GetSignMessageActivity.this).inflate(R.layout.layout_baidu_map_item, null);
+        ImageView imageView = (ImageView)mView.findViewById(R.id.img);
+        if(type == 1){
+            imageView.setImageResource(R.drawable.ic_admin_location);
+        } else{
+            imageView.setImageResource(R.drawable.ic_map_member);
+        }
         BitmapDescriptor bitmapDescriptor1 = BitmapDescriptorFactory
                 .fromView(mView);
 
@@ -287,10 +297,10 @@ public class GetSignMessageActivity extends BaseActivity implements SensorEventL
                             if(recordList.get(i).getType() == 2){
                                 number ++;
                                 mGroupSignRecordList.add(0 ,recordList.get(i));
-                                setMarker(recordList.get(i).getLatitude() ,recordList.get(i).getLongitude());
+                                setMarker(recordList.get(i).getRlatitude() ,recordList.get(i).getLongitude() ,2);
                             }else if(recordList.get(i).getType() == 1){
                                 adminGroupSignInMessage = recordList.get(i);
-                                setMarker(adminGroupSignInMessage.getLatitude() ,adminGroupSignInMessage.getLongitude());
+                                setMarker(adminGroupSignInMessage.getLatitude() ,adminGroupSignInMessage.getLongitude() ,1);
                             }
                         }
                         mSimpleSignInRecordAdapter.notifyDataSetChanged();
