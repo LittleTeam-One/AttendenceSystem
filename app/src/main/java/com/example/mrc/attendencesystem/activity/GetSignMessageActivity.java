@@ -1,7 +1,7 @@
 package com.example.mrc.attendencesystem.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,11 +13,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RadioGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -30,12 +31,28 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.example.mrc.attendencesystem.AttendenceSystemApplication;
 import com.example.mrc.attendencesystem.R;
+import com.example.mrc.attendencesystem.adapter.SimpleSignInRecordAdapter;
+import com.example.mrc.attendencesystem.clientandserver.ClientUtil;
+import com.example.mrc.attendencesystem.entity.GroupMessage;
+import com.example.mrc.attendencesystem.entity.GroupSignInMessage;
+import com.example.mrc.attendencesystem.entity.TranObject;
+import com.example.mrc.attendencesystem.provider.TimeTransform;
 
-public class LocationActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GetSignMessageActivity extends BaseActivity implements SensorEventListener{
+    MapView mMapView;
+    TextView mTvEndTime ,mTvNumber;
+    RecyclerView mSignRecordRecyclerView;
+
     // 定位相关
     LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
@@ -49,22 +66,22 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
     private double mCurrentLat = 0.0;
     private double mCurrentLon = 0.0;
     private float mCurrentAccracy;
-
-    MapView mMapView;
     BaiduMap mBaiduMap;
 
-    // UI相关
-    RadioGroup.OnCheckedChangeListener radioButtonListener;
-    TextView requestLocButton;
-    TextView mTvCancel ,mTvOk;
-
+    int messageId;
+    int groupId;
+    String adminId;
+    String phoneNumber;
     boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
-    private float direction;
-
-    @SuppressLint("CutPasteId")
+    GroupSignInMessage adminGroupSignInMessage;
+    SimpleSignInRecordAdapter mSimpleSignInRecordAdapter;
+    List<GroupSignInMessage> mGroupSignRecordList;
+    private AttendenceSystemApplication application;
+    //地球半径
+    private static final double EARTH_RADIUS = 6378.137;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //在申请之前，我们要判断一下是否为安卓6.0机型
         if (Build.VERSION.SDK_INT >= 23) {
@@ -74,77 +91,38 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
         if (!"generic".equalsIgnoreCase(Build.BRAND)) {
             SDKInitializer.initialize(getApplicationContext());
         }
-        setContentView(R.layout.activity_location);
-        requestLocButton = (TextView) findViewById(R.id.button1);
-        mTvOk = (TextView)findViewById(R.id.tv_ok);
-        mTvCancel = (TextView)findViewById(R.id.tv_cancel);
-        mTvOk.setOnClickListener(this);
-        mTvCancel.setOnClickListener(this);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//获取传感器管理服务
-        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-        requestLocButton.setText("普通");
-        View.OnClickListener btnClickListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                switch (mCurrentMode) {
-                    case NORMAL:
-                        requestLocButton.setText("跟随");
-                        mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
-                        mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
-                                mCurrentMode, true, mCurrentMarker));
-                        MapStatus.Builder builder = new MapStatus.Builder();
-                        builder.overlook(0);
-                        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-                        break;
-                    case COMPASS:
-                        requestLocButton.setText("普通");
-                        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-                        mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
-                                mCurrentMode, true, mCurrentMarker));
-                        MapStatus.Builder builder1 = new MapStatus.Builder();
-                        builder1.overlook(0);
-                        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder1.build()));
-                        break;
-                    case FOLLOWING:
-                        requestLocButton.setText("罗盘");
-                        mCurrentMode = MyLocationConfiguration.LocationMode.COMPASS;
-                        mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
-                                mCurrentMode, true, mCurrentMarker));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-        requestLocButton.setOnClickListener(btnClickListener);
+        setContentView(R.layout.activity_get_sign_message);
+        application = (AttendenceSystemApplication)getApplicationContext();
 
-        RadioGroup group = (RadioGroup) this.findViewById(R.id.radioGroup);
-        radioButtonListener = new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.defaulticon) {
-                    // 传入null则，恢复默认图标
-                    mCurrentMarker = null;
-                    mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
-                                    mCurrentMode, true, null));
-                }
-                if (checkedId == R.id.customicon) {
-                    // 修改为自定义marker
-                    mCurrentMarker = BitmapDescriptorFactory
-                            .fromResource(R.drawable.ic_location);
-                    mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
-                            mCurrentMode, true, mCurrentMarker,
-                            accuracyCircleFillColor, accuracyCircleStrokeColor));
-                }
-            }
-        };
-        group.setOnCheckedChangeListener(radioButtonListener);
+        Intent intent =getIntent();
+        messageId = intent.getIntExtra("messageId" ,-1);
+        groupId = intent.getIntExtra("groupId" ,-1);
+        adminId = intent.getStringExtra("adminId");
+        phoneNumber = intent.getStringExtra("phoneNumber");
+        findView();
+        init();
+    }
 
-        // 地图初始化
+    void findView(){
         mMapView = (MapView) findViewById(R.id.map_view);
+        mTvEndTime = (TextView) findViewById(R.id.tv_end_time);
+        mTvNumber = (TextView) findViewById(R.id.tv_number);
+        mSignRecordRecyclerView = (RecyclerView) findViewById(R.id.rv_sign_record);
+    }
+
+    void init(){
+        // 地图初始化
         mBaiduMap = mMapView.getMap();
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
         mBaiduMap.setIndoorEnable(true);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);//获取传感器管理服务
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+        mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(
+                mCurrentMode, true, mCurrentMarker));
+        MapStatus.Builder builder1 = new MapStatus.Builder();
+        builder1.overlook(0);
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder1.build()));
         // 定位初始化
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
@@ -154,6 +132,17 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+
+        mGroupSignRecordList = new ArrayList <>();
+        mSimpleSignInRecordAdapter = new SimpleSignInRecordAdapter(GetSignMessageActivity.this ,mGroupSignRecordList);
+        mSignRecordRecyclerView.setAdapter(mSimpleSignInRecordAdapter);
+        //获取所有记录
+        GroupMessage groupMessage = new GroupMessage();
+        groupMessage.setMessageId(messageId);
+        groupMessage.setContentType(2);
+        groupMessage.setGroupId(groupId);
+        groupMessage.setFromId(phoneNumber);
+        ClientUtil.getSingleSignRecord(application ,groupMessage);
     }
 
     @Override
@@ -175,25 +164,6 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
-    }
-
-    /**
-     * 确认和取消按钮的点击事件监听
-     * @author  cqx
-     * create at 2018/5/22 23:03
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_ok :
-                finish();
-                break;
-            case R.id.tv_cancel :
-                finish();
-                break;
-            default:
-                break;
-        }
     }
 
     /**
@@ -271,7 +241,7 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
         }
     }
 
-            //当用户选择接受或者拒绝时，申请权限会执行一个回调
+    //当用户选择接受或者拒绝时，申请权限会执行一个回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -279,9 +249,59 @@ public class LocationActivity extends AppCompatActivity implements SensorEventLi
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //请求权限成功,做相应的事情 } else {
                 //请求失败则提醒用户
-                Toast.makeText(LocationActivity.this, "请求权限失败！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetSignMessageActivity.this, "请求权限失败！", Toast.LENGTH_SHORT).show();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    void setMarker(double lat ,double lon){
+
+        //设置坐标点
+        LatLng point1 = new LatLng(lat, lon);
+
+        View mView = LayoutInflater.from(GetSignMessageActivity.this).inflate(R.layout.layout_baidu_map_item, null);
+        BitmapDescriptor bitmapDescriptor1 = BitmapDescriptorFactory
+                .fromView(mView);
+
+        OverlayOptions adminLocation = new MarkerOptions().position(point1)
+                .icon(bitmapDescriptor1).zIndex(15).draggable(true);
+        //在地图上添加
+        mBaiduMap.addOverlay(adminLocation);
+    }
+
+
+    @Override
+    public void getMessage(TranObject msg) {
+        if(msg != null){
+            switch (msg.getType()){
+                /*获取一个签到的所有记录*/
+                case GET_SINGLE_SIGNIN_RECORD:
+                    if(msg.isSuccess()){
+                        List<GroupSignInMessage> recordList = new ArrayList<>();
+                        recordList = msg.getSignInfoslist();
+                        int number = 0;
+                        adminGroupSignInMessage = new GroupSignInMessage();
+                        mBaiduMap.clear();
+                        for(int i = 0;i<recordList.size();i++){
+                            if(recordList.get(i).getType() == 2){
+                                number ++;
+                                mGroupSignRecordList.add(0 ,recordList.get(i));
+                                setMarker(recordList.get(i).getLatitude() ,recordList.get(i).getLongitude());
+                            }else if(recordList.get(i).getType() == 1){
+                                adminGroupSignInMessage = recordList.get(i);
+                                setMarker(adminGroupSignInMessage.getLatitude() ,adminGroupSignInMessage.getLongitude());
+                            }
+                        }
+                        mSimpleSignInRecordAdapter.notifyDataSetChanged();
+                        String endTime = TimeTransform.stampToTime(adminGroupSignInMessage.getEndTime());
+                        mTvEndTime.setText(endTime);
+                        mTvNumber.setText(String.valueOf(number));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

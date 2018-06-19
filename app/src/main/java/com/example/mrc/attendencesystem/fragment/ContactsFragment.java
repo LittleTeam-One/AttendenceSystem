@@ -184,7 +184,9 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
         Log.d("dddddd" ,mGroupsData.size()+"");
         int type = 1;      //类型是1表示群聊，2表示好友聊天
         toChatIntent.putExtra("type" ,type);
-        toChatIntent.putExtra("groupid" ,groupClick.getGroupId());
+        toChatIntent.putExtra("groupId" ,groupClick.getGroupId());
+        toChatIntent.putExtra("adminId",groupClick.getAdminId());
+        toChatIntent.putExtra("groupName",groupClick.getGroupName());
         startActivity(toChatIntent);
 
     }

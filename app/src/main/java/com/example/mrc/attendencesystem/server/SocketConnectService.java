@@ -77,11 +77,13 @@ public class SocketConnectService extends Service {
                             // Log.d("client", "onStartCommand:msg " +msg);
                             JsonReader jsonReader = new JsonReader(new StringReader(msg));//其中jsonContext为String类型的Json数据
                             jsonReader.setLenient(true);
+                            System.out.println(msg);
+                            System.out.println(msg.length());
                             TranObject responseObject = gson.fromJson(jsonReader,TranObject.class);
-                            if(responseObject!=null && responseObject.getType() != TranObjectType.HEART_TEST)
+                            /*if(responseObject!=null && responseObject.getType() != TranObjectType.HEART_TEST)
                             {
                                 Log.d("client", "onStartCommand:msg " +msg);
-                            }
+                            }*/
                             Log.d("client", "onStartCommand:msg " +msg);
                             Intent broadCast = new Intent();
                             Bundle bundle = new Bundle();
@@ -90,7 +92,7 @@ public class SocketConnectService extends Service {
                             broadCast.setAction(AttendenceSystem.ACTION);
                             sendBroadcast(broadCast);// 把收到的消息已广播的形式发送出去
                             //Log.d("Client", "run: time" + (System.currentTimeMillis() - lastSendTime));
-                            if(System.currentTimeMillis() - lastSendTime >keepAliveDelay)
+                            /*if(System.currentTimeMillis() - lastSendTime >keepAliveDelay)
                             {
                                 //Log.d("client", "run: time" + (System.currentTimeMillis() - lastSendTime));
                                 //Log.d("client", "run: 开始发送心跳包数据");
@@ -124,7 +126,7 @@ public class SocketConnectService extends Service {
                                 //则说明服务器挂了
                                 Log.d("client","服务器异常");
                                 Toast.makeText(getApplicationContext(),"服务器异常",Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         }
                     });
 

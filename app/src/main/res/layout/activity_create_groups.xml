@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.example.mrc.attendencesystem.activity.CreateGroupsActivity">
-    <TextView
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="创建群组"/>
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_border_radius_3dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/username_editText"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:background="@null"
+            android:hint="创建群组的昵称"
+            android:textColor="@color/font_color_light_blue"
+            android:textSize="@dimen/font_size_15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rectangle_border_radius_3dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/student_number_editText"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:background="@null"
+            android:hint="群组的描述"
+            android:inputType="textPassword"
+            android:textColor="@color/font_color_light_blue"
+            android:textSize="@dimen/font_size_15sp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/register_btn"
+        android:layout_width="296dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/rectangle_button_style"
+        android:text="创建群组"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_17sp" />
+</LinearLayout>

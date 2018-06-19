@@ -2,8 +2,9 @@ package com.example.mrc.attendencesystem.clientandserver;
 
 import android.util.Log;
 
-import com.example.mrc.attendencesystem.AttendenceSystem;
 import com.example.mrc.attendencesystem.AttendenceSystemApplication;
+import com.example.mrc.attendencesystem.entity.Group;
+import com.example.mrc.attendencesystem.entity.GroupMessage;
 import com.example.mrc.attendencesystem.entity.GroupRequest;
 import com.example.mrc.attendencesystem.entity.GroupSignInMessage;
 import com.example.mrc.attendencesystem.entity.TranObject;
@@ -37,6 +38,7 @@ public class ClientUtil {
             u.setPhoneNumber(user.getPhoneNumber());
             u.setPassword(user.getPassword());
             o.setUser(u);
+            o.setFromUser(user.getPhoneNumber());
             String responseString = mGson.toJson(o);
             Log.d("client", "responseString: "+responseString);
             out.setMsg(responseString);
@@ -324,7 +326,7 @@ public class ClientUtil {
      * mqh
      * 获取群聊天记录
      */
-    public static void getGroupChatRecord(int groupid, AttendenceSystemApplication application ,int page) {
+    public static void getGroupChatRecord(String phoneNumber, int groupid, AttendenceSystemApplication application ,int page) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -340,6 +342,7 @@ public class ClientUtil {
             groupRequest.setGroupId(groupid);
             groupRequest.setCurrentPage(page);
             o.setRequest(groupRequest);
+            o.setFromUser(phoneNumber);
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
@@ -349,7 +352,7 @@ public class ClientUtil {
      * mqh
      * 发送群聊天记录
      */
-    public static void sendGroupChatRecord(String groupid, AttendenceSystemApplication application , String phoneNumber ,String content, int type , GroupSignInMessage groupSignInMessage) {
+    public static void sendGroupChatRecord(AttendenceSystemApplication application , GroupMessage groupMessage, GroupSignInMessage groupSignInMessage) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -359,8 +362,10 @@ public class ClientUtil {
         {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.GET_GROUP_MESSAGE);
-            o.setToUser(groupid);
+            TranObject o = new TranObject(TranObjectType.SEND_GROUP_MESSAGE);
+            o.setSendGroupMessage(groupMessage);
+            o.setSignInfo(groupSignInMessage);
+            o.setFromUser(groupMessage.getFromId());
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
@@ -369,10 +374,9 @@ public class ClientUtil {
 
     /**
      * mqh
-     * 获取个人签到记录
-     *//*
-    public static void getUserSignRecord(String senderid, String groupid, AttendenceSystemApplication application) {
-
+     ** 获取单一的签到记录
+     */
+    public static void getSingleSignRecord(AttendenceSystemApplication application , GroupMessage groupMessage) {
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
                 .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
@@ -381,19 +385,18 @@ public class ClientUtil {
         {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.GET_USER_SIGN_RECORD);
-            o.setFromUser(senderid);
-            o.setToUser(groupid);
+            TranObject o = new TranObject(TranObjectType.GET_SINGLE_SIGNIN_RECORD);
+            o.setSendGroupMessage(groupMessage);
+            o.setFromUser(groupMessage.getFromId());
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
     }
-    *//**
+    /**
      * mqh
      * 获取群签到记录
-     *//*
-    public static void getGroupSignRecord(String groupid, AttendenceSystemApplication application) {
-
+     */
+    public static void getGroupSignRecord( AttendenceSystemApplication application, Group group, String phoneNumber) {
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
                 .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
@@ -403,17 +406,18 @@ public class ClientUtil {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
             TranObject o = new TranObject(TranObjectType.GET_GROUP_SIGN_RECORD);
-            o.setFromUser(groupid);
+            o.setGroup(group);
+            o.setFromUser(phoneNumber);
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
     }
 
-    *//**
+    /**
      * zy
-     * 发起签到
-     *//*
-    public static void sendSignRequest(String senderid,int groupid,String groupName,String content,int type, MyApplication application) {
+     * 签到数据传到服务端
+     */
+    public static void sendSignRequest(AttendenceSystemApplication application ,GroupSignInMessage groupSignInMessage) {
 
         Gson mGson = new GsonBuilder()
                 .setPrettyPrinting()  //格式化输出（序列化）
@@ -423,19 +427,56 @@ public class ClientUtil {
         {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.SEND_SIGN_REQUEST);
-            Message message = new Message();
-            message.setGroup_id(groupid);
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
-            System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
-            message.setTime(new Date());
-            message.setGroupName(groupName);
-            message.setSender_id(senderid);
-            message.setType(type); //消息类型
-            message.setMes_content(content); //消息内容
-            o.setMessage(message);
+            TranObject o = new TranObject(TranObjectType.USER_SIGN_IN);
+            o.setSignInfo(groupSignInMessage);
+            o.setFromUser(groupSignInMessage.getReceiverId());
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
-    }*/
+    }
+
+    /**
+     * zy
+     * 签到数据传到服务端
+     */
+
+    public static void setSignIn(AttendenceSystemApplication application , GroupMessage groupMessage ,GroupSignInMessage groupSignInMessage) {
+
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()  //格式化输出（序列化）
+                .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.SEND_GROUP_MESSAGE);
+            o.setSendGroupMessage(groupMessage);
+            o.setSignInfo(groupSignInMessage);
+            o.setFromUser(groupMessage.getFromId());
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+    }
+
+    /**
+     * zy
+     * 获取群成员
+     */
+    public static void getGroupMember(AttendenceSystemApplication application ,Group group ,String phoneNumber) {
+        Gson mGson = new GsonBuilder()
+                .setPrettyPrinting()  //格式化输出（序列化）
+                .setDateFormat("yyyy-MM-dd HH:mm:ss") //日期格式化输出
+                .create();
+        if(application.isClientStart())
+        {
+            Client client = application.getClient();
+            ClientOutputThread out = client.getClientOutputThread();
+            TranObject o = new TranObject(TranObjectType.GET_GROUP_ITEM);
+            o.setFromUser(phoneNumber);
+            o.setGroup(group);
+            String responseString = mGson.toJson(o);
+            out.setMsg(responseString);
+        }
+    }
 }

@@ -1,31 +1,40 @@
 package com.example.mrc.attendencesystem.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mrc.attendencesystem.R;
+import com.example.mrc.attendencesystem.activity.ChatActivity;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mr.C on 2018/5/22.
  */
 
 public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecyclerViewAdapter.ViewHolder>{
-    private List<String> mData =new ArrayList<>();
+    private List<Map<Integer ,Object>> mData =new ArrayList<>();
     private Context mContext;
     public static final int VIEW_TYPE_OTHERS = 1;
     public static final int VIEW_TYPE_MINE = 2;
+    public static final int VIEW_TYPE_SIGN = 3;
+    public static final int COMMON_MESSAGE = 1;
+    public static final int SIGN_MESSAGE = 2;
     private LayoutInflater mInflater;
 
-    public ChatLogRecyclerViewAdapter(Context context , List<String> list){
+    public ChatLogRecyclerViewAdapter(Context context , List<Map<Integer ,Object>> list){
         mContext = context;
         mData = list;
     }
@@ -40,29 +49,33 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
             case VIEW_TYPE_MINE :
                 vh = new HolderTwo(mInflater.inflate(R.layout.layout_chat_log_mine, parent, false));
                 break;
+            case VIEW_TYPE_SIGN :
+                vh = new HolderThree(mInflater.inflate(R.layout.layout_group_sign, parent, false));
+                break;
         }
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ChatLogRecyclerViewAdapter.ViewHolder holder, int position) {
-        if(mData.get(position).length()==1){
-            if("1".equals(mData.get(position))){
-                holder.mTvChatLog.setText("我要减肥！");
-            }else {
-                holder.mTvChatLog.setText("你不需要减肥！");
-            }
-        }else {
-            holder.mTvChatLog.setText(mData.get(position).substring(1));
+        if((Integer) mData.get(position).get(ChatActivity.CONTENT_TYPE) == COMMON_MESSAGE) {    //普通消息
+            holder.mTvName.setText((String)mData.get(position).get(ChatActivity.FROM_ID));
+            holder.mTvChatLog.setText((String)mData.get(position).get(ChatActivity.CONTENT));
+        }else if((Integer) mData.get(position).get(ChatActivity.CONTENT_TYPE)  == SIGN_MESSAGE){        //签到消息
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if("1".equals(mData.get(position).substring(0, 1))){
-            return VIEW_TYPE_OTHERS;
+        if((Integer)mData.get(position).get(ChatActivity.CONTENT_TYPE) == SIGN_MESSAGE){
+            return VIEW_TYPE_SIGN;
+
         }else {
-            return VIEW_TYPE_MINE;
+            if(ChatActivity.phoneNumber.equals((String) mData.get(position).get(ChatActivity.FROM_ID))){
+                return VIEW_TYPE_MINE;
+            }else {
+                return VIEW_TYPE_OTHERS;
+            }
         }
     }
 
@@ -75,6 +88,7 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTvName ,mTvChatLog;
         public ImageView mImgHeadIcon;
+        public RelativeLayout mLlSign;
         public ViewHolder(View itemView) {
             super(itemView);
         }
@@ -92,9 +106,9 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
         this.listener = listener;
     }
 
-    /*
+   /* *//*
     * 长按事件的接口，方法
-    * */
+    * *//*
     private OnItemLongClickListener longListener;
 
     public interface OnItemLongClickListener {
@@ -102,7 +116,7 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
     }
     public void setOnItemLongClickListener(OnItemLongClickListener longListener) {
         this.longListener = longListener;
-    }
+    }*/
 
     //  删除数据
     public void removeData(int position) {
@@ -119,33 +133,6 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
             mTvName= (TextView) viewHolder.findViewById(R.id.tv_others_name);
             mTvChatLog= (TextView) viewHolder.findViewById(R.id.others_chat_log);
             mImgHeadIcon= (ImageView) viewHolder.findViewById(R.id.img_others_head_icon);
-
-            mTvChatLog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Triggers click upwards to the adapter on click
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(view, position);
-                        }
-                    }
-                }
-            });
-
-            mTvChatLog.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if (longListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            longListener.onItemLongClick(viewHolder, position);
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
         }
     }
 
@@ -156,30 +143,22 @@ public class ChatLogRecyclerViewAdapter extends RecyclerView.Adapter<ChatLogRecy
             mTvName =(TextView)viewHolder.findViewById(R.id.tv_my_name);
             mTvChatLog =(TextView)viewHolder.findViewById(R.id.my_chat_log);
             mImgHeadIcon =(ImageView) viewHolder.findViewById(R.id.img_my_head_icon);
+        }
+    }
 
-            mTvChatLog.setOnClickListener(new View.OnClickListener() {
+    public class HolderThree extends ViewHolder{
+        public HolderThree(final View viewHolder) {
+            super(viewHolder);
+            mLlSign = (RelativeLayout)viewHolder.findViewById(R.id.ll_sign);
+            mLlSign.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // Triggers click upwards to the adapter on click
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(view, position);
                         }
                     }
-                }
-            });
-            mTvChatLog.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    if (longListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            longListener.onItemLongClick(viewHolder, position);
-                        }
-                        return true;
-                    }
-                    return false;
                 }
             });
         }

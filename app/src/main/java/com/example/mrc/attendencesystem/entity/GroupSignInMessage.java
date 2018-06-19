@@ -1,21 +1,31 @@
 package com.example.mrc.attendencesystem.entity;
-
 import java.io.Serializable;
 
-public class GroupSignInMessage implements Serializable{
+public class GroupSignInMessage implements Serializable {
+
     private int recordId;//在群消息中id
+    private int type;//1为发起签到 2为确认签到
     private int groupId;//群Id
-    private int originatorId;//发起人Id
-    private String time; //发起时间
+    private String originatorId;//发起人Id 即手机号
+    private long startTime; //发起时间
+    private long endTime;//结束时间
     private double longitude; //发起人经度
     private double latitude; //发起人纬度
     private int region; //签到地理范围
-    private int receiverId; //签到人Id
+    private String receiverId; //签到人Id
     private double rlongitude; //签到人经度
     private double rlatitude; //签到人纬度
-    private boolean state; //签到是否结束
+    private boolean state; //签到是否买结束
     private boolean done; //签到人是否签到
     private int result; //签到结果
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getRecordId() {
         return recordId;
@@ -33,20 +43,28 @@ public class GroupSignInMessage implements Serializable{
         this.groupId = groupId;
     }
 
-    public int getOriginatorId() {
+    public String getOriginatorId() {
         return originatorId;
     }
 
-    public void setOriginatorId(int originatorId) {
+    public void setOriginatorId(String originatorId) {
         this.originatorId = originatorId;
     }
 
-    public String getTime() {
-        return time;
+    public long getStartTime() {
+        return startTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public double getLongitude() {
@@ -73,7 +91,11 @@ public class GroupSignInMessage implements Serializable{
         this.region = region;
     }
 
-    public void setReceiverId(int receiverId) {
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }
 
@@ -115,10 +137,5 @@ public class GroupSignInMessage implements Serializable{
 
     public void setResult(int result) {
         this.result = result;
-    }
-
-    public int getReceiverId() {
-
-        return receiverId;
     }
 }

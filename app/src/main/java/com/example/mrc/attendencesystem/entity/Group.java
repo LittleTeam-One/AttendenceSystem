@@ -36,4 +36,8 @@ public class Group implements Serializable{
     public void setAdminId(int adminId) {
         this.adminId = adminId;
     }
+
+    public int getAdminId() {
+        return adminId;
+    }
 }

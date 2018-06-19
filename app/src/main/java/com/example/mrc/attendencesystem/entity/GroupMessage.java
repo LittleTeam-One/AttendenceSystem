@@ -1,10 +1,27 @@
 package com.example.mrc.attendencesystem.entity;
 
-public class GroupMessage {
-    int groupId;
-    int fromId;
-    int contentType;
-    String content;
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class GroupMessage implements Serializable{
+    private int messageId;//消息Id
+    private int groupId;//群ID
+    private String fromId;//发起人ID 即手机号
+    private int contentType;//消息类型
+    private String content;//消息内容
+
+    public GroupMessage(){
+
+    }
+
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
+    }
 
     public int getGroupId() {
         return groupId;
@@ -14,11 +31,11 @@ public class GroupMessage {
         this.groupId = groupId;
     }
 
-    public int getFromId() {
+    public String getFromId() {
         return fromId;
     }
 
-    public void setFromId(int fromId) {
+    public void setFromId(String fromId) {
         this.fromId = fromId;
     }
 
