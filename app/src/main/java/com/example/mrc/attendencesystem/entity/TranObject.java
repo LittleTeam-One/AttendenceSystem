@@ -23,15 +23,16 @@ public class TranObject implements Serializable{
     public void setMessages(ArrayList<Message> messages) {
         this.groupMessages = messages;
     }
-    public List<User> userList;
+    public ArrayList<User> groupUsers;
 
-    public List <User> getUserList() {
-        return userList;
+    public ArrayList<User> getGroupUsers() {
+        return groupUsers;
     }
 
-    public void setUserList(List <User> userList) {
-        this.userList = userList;
+    public void setGroupUsers(ArrayList<User> groupUsers) {
+        this.groupUsers = groupUsers;
     }
+
 
     public User getUser() {
         return user;

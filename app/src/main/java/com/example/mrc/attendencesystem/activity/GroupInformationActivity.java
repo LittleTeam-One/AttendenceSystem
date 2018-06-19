@@ -2,7 +2,9 @@ package com.example.mrc.attendencesystem.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,10 +30,10 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
             mTvGroupMember ,mTvGroupSignLog ,mTvGroupApply;
     RecyclerView mRecyclerViewMember ,mRecyclerViewSignLog;
     LinearLayout mLlApply;
-    String phoneNumber;
-    int groupId;
-    String adminId;
-    String groupName;
+    static String phoneNumber;
+    static int groupId;
+    static String adminId;
+    static String groupName;
     List<String> mGroupMemberItemList;
     List<GroupSignInMessage> mGroupSignInLogList;
 
@@ -49,6 +51,8 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
         groupId = intent.getIntExtra("groupId" ,-1);
         adminId = intent.getStringExtra("adminId");
         groupName = intent.getStringExtra("groupName");
+        /*Log.d("gggg" ,phoneNumber);
+        Log.d("gggg" ,adminId);*/
         findView();
         init();
     }
@@ -80,6 +84,18 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
             mTvSetSign.setVisibility(View.VISIBLE);
             mLlApply.setVisibility(View.VISIBLE);
         }
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerViewMember.setLayoutManager(linearLayoutManager1);
+        mGroupMemberItemList = new ArrayList <>();
+        mGroupNumberRecyclerViewAdapter = new GroupNumberRecyclerViewAdapter(GroupInformationActivity.this ,mGroupMemberItemList);
+        mRecyclerViewMember.setAdapter(mGroupNumberRecyclerViewAdapter);
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerViewSignLog.setLayoutManager(linearLayoutManager2);
+        mGroupSignInLogList = new ArrayList <>();
+        mGroupSignLogRecyclerViewAdapter = new GroupSignLogRecyclerViewAdapter(GroupInformationActivity.this ,mGroupSignInLogList);
+        //mGroupSignLogRecyclerViewAdapter.setOnItemClickListener(this);
+        mRecyclerViewSignLog.setAdapter(mGroupSignLogRecyclerViewAdapter);
     }
 
     @Override
@@ -101,9 +117,6 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
                     Group group = new Group();
                     group.setGroupId(groupId);
                     ClientUtil.getGroupMember(application ,group ,phoneNumber);
-                    mGroupMemberItemList = new ArrayList <>();
-                    mGroupNumberRecyclerViewAdapter = new GroupNumberRecyclerViewAdapter(GroupInformationActivity.this ,mGroupMemberItemList);
-                    mRecyclerViewMember.setAdapter(mGroupNumberRecyclerViewAdapter);
                     openNumber = true;
                 }
                 break;
@@ -116,10 +129,6 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
                     Group group = new Group();
                     group.setGroupId(groupId);
                     ClientUtil.getGroupSignRecord(application ,group ,phoneNumber);
-                    mGroupSignInLogList = new ArrayList <>();
-                    mGroupSignLogRecyclerViewAdapter = new GroupSignLogRecyclerViewAdapter(GroupInformationActivity.this ,mGroupSignInLogList);
-                    mGroupSignLogRecyclerViewAdapter.setOnItemClickListener(this);
-                    mRecyclerViewMember.setAdapter(mGroupSignLogRecyclerViewAdapter);
                     openSignLog = true;
                 }
                 break;
@@ -158,10 +167,10 @@ public class GroupInformationActivity extends BaseActivity implements View.OnCli
         if(msg != null) {
             switch (msg.getType()) {
                 /*获取群的成员*/
-                case GET_GROUP_ITEM:
+                case GET_GROUP_MEMBERS:
                     if (msg.isSuccess()) {
                         mGroupMemberItemList.clear();
-                        List <User> groupItemList = msg.getUserList();
+                        List <User> groupItemList = msg.getGroupUsers();
                         for (int i = 0; i < groupItemList.size(); i++) {
                             mGroupMemberItemList.add(groupItemList.get(i).getPhoneNumber());
                         }
