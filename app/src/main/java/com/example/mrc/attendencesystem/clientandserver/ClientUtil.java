@@ -203,7 +203,7 @@ public class ClientUtil {
 
     *//**
      *搜索群
-     *//*
+     */
     public static void searchGroup(String groupName,AttendenceSystemApplication application)
     {
 
@@ -223,7 +223,7 @@ public class ClientUtil {
             out.setMsg(responseString);
         }
     }
-    *//**
+    /**
      * mqh
      *
      *//*
@@ -269,8 +269,8 @@ public class ClientUtil {
     *//**
      * mqh
      * 发送加群申请
-     *//*
-    public static void sendJoinRequest(String senderid, String receiverid,int type, int groupid,String msgcontent,
+     */
+    public static void sendJoinRequest(Group group,
                                        AttendenceSystemApplication application) {
 
         Gson mGson = new GsonBuilder()
@@ -282,18 +282,12 @@ public class ClientUtil {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
             TranObject o = new TranObject(TranObjectType.SEND_JOIN_REQUEST);
-            Message message = new Message();
-            message.setGroup_id(groupid);
-            message.setSender_id(senderid);
-            message.setReceiver_id(receiverid);
-            message.setType(type);
-            message.setMes_content(msgcontent);
-            o.setMessage(message);
+            o.setGroup(group);
             String responseString = mGson.toJson(o);
             out.setMsg(responseString);
         }
     }
-    *//**
+    /**
      * mqh
      * 发送加入群的回应（若身份为群主）
      *//*
@@ -472,7 +466,7 @@ public class ClientUtil {
         {
             Client client = application.getClient();
             ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.GET_GROUP_ITEM);
+            TranObject o = new TranObject(TranObjectType.GET_GROUP_MEMBERS);
             o.setFromUser(phoneNumber);
             o.setGroup(group);
             String responseString = mGson.toJson(o);

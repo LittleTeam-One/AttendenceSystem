@@ -30,7 +30,7 @@ public class GroupNumberRecyclerViewAdapter extends RecyclerView.Adapter<GroupNu
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder vh = null;
         mInflater = LayoutInflater.from(mContext);
-        vh = new ViewHolder(mInflater.inflate(R.layout.layout_groups_item, parent, false));
+        vh = new ViewHolder(mInflater.inflate(R.layout.layout_group_item, parent, false));
         return vh;
     }
 

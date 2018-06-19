@@ -7,7 +7,7 @@ public class Group implements Serializable{
     int groupId;
     String groupName;
     String introdue;
-    int adminId;
+    String adminId;
 
     public void setGroupId(int groupId) {
         this.groupId = groupId;
@@ -33,11 +33,11 @@ public class Group implements Serializable{
         return introdue;
     }
 
-    public void setAdminId(int adminId) {
+    public void setAdminId(String adminId) {
         this.adminId = adminId;
     }
 
-    public int getAdminId() {
+    public String getAdminId() {
         return adminId;
     }
 }
