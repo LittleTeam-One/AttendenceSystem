@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -36,6 +37,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     RecyclerView mChatLogRecyclerView;
     Button mBtnSendMessage;
     LinearLayoutManager mLayoutManager;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ChatLogRecyclerViewAdapter mChatLogRecyclerViewAdapter;
     public static Context mContext;
     private SharedPreferences sp;
@@ -87,7 +89,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mImgInformation = (ImageView) findViewById(R.id.img_information);
         /*mImgLocation = (ImageView)findViewById(R.id.img_location);
         mImgSetLocation = (ImageView)findViewById(R.id.img_set_location);*/
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.sr_layout);
         mTvName = (TextView)findViewById(R.id.tv_name);
         mEtSendMessage = (EditText)findViewById(R.id.et_send_message);
         mChatLogRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_chat_log);
@@ -243,6 +245,17 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 }
             }
         });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(mData == null || mData.size() <=0){
+                    ClientUtil.getGroupChatRecord(phoneNumber, groupid,application ,-1);
+                }else {
+                    ClientUtil.getGroupChatRecord(phoneNumber ,groupid,application ,(Integer) mData.get(mData.size()-1).get(4));
+                }
+            }
+        });
     }
     private void initOtherData() {
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -268,7 +281,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemClick(View itemView, int position) {
         //只有签到才能点击进入签到
-        if(phoneNumber == mData.get(position).get(1)){
+        if(adminId.equals(phoneNumber)){
             Intent intent1 = new Intent(ChatActivity.this ,GetSignMessageActivity.class);
             intent1.putExtra("phoneNumber" ,phoneNumber);
             intent1.putExtra("groupId" ,groupid);
@@ -334,6 +347,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                         }
                         mChatLogRecyclerViewAdapter.notifyDataSetChanged();
                         scrollToLastItem();
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                     break;
                 /*发送聊天记录给服务器端*/
