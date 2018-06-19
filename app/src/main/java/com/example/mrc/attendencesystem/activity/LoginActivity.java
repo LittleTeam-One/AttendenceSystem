@@ -137,31 +137,8 @@ public class LoginActivity extends BaseActivity {
                 icNumber = mIcEdit.getText().toString();
                 boolean noFault = validateInput(username, password, icNumber);
                 if (noFault) {
-                    //在子线程里运行网络请求
-                    Thread thread =new Thread(new Runnable(){
-                        public void run() {
-                            User user = new User(username,password);
-                            ClientUtil.checkLogin(user,mApplication);
-                            /*boolean b=login(username, password);*/
-                            if(true){
-                                //转到主界面
-                                Intent intent =new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("phoneNumber" ,username);
-                                startActivity(intent);
-                            }else {
-                                //子线程不能运行Toast，需要推到子线程里
-                                Handler handlerThree=new Handler(Looper.getMainLooper());
-                                handlerThree.post(new Runnable(){
-                                    public void run(){
-                                        Toast.makeText(LoginActivity.this,
-                                                "账号和密码不匹配，请重新登录！", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                            }
-                        }
-                    });
-                    thread.start();
+                    User user = new User(username,password);
+                    ClientUtil.checkLogin(user,mApplication);
                 }
             }
         });
@@ -202,8 +179,7 @@ public class LoginActivity extends BaseActivity {
                 case LOGIN:// LoginActivity只处理登录的消息
                     Boolean isOk = msg.isSuccess();
                     Log.d("Client", "getMessage: "+ isOk);
-                    if(msg.isSuccess())//账号密码匹配，允许登录
-                    {
+                    if(msg.isSuccess()){ //账号密码匹配，允许登录
                         editor.putString(AttendenceSystemApplication.USER_PHONE,mUsernameEdit.getText().toString());
                         editor.putString(AttendenceSystemApplication.USER_PASSWORD,mPasswordEdit.getText().toString());
                         editor.apply();
