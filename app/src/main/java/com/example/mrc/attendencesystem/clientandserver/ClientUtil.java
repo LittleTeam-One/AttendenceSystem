@@ -71,26 +71,7 @@ public class ClientUtil {
 
     }
 
-    *//**
-     *注册用户
-     */
-    public static void registerUser(AttendenceSystemApplication application,
-                                    User user) {
-        Gson mGson = new GsonBuilder()
-                .setPrettyPrinting()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
-        if(application.isClientStart())
-        {
-            Client client = application.getClient();
-            ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.REGISTER);
-            o.setUser(user);
-            String responseString = mGson.toJson(o);
-            out.setMsg(responseString);
-        }
-
-    }
+    */
     /**
      * mqh
      *
@@ -133,27 +114,7 @@ public class ClientUtil {
         }
 
     }
-    /**
-     *创建群组
-     */
-    public static void createGroup(AttendenceSystemApplication application ,Group group)
-    {
-        Gson mGson = new GsonBuilder()
-                .setPrettyPrinting()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
-        if(application.isClientStart())
-        {
-            Client client = application.getClient();
-            ClientOutputThread out = client.getClientOutputThread();
-            TranObject o = new TranObject(TranObjectType.ADD_GROUP);
-            o.setGroup(group);
-            o.setFromUser(group.getAdminId());
-            String responseString = mGson.toJson(o);
-            out.setMsg(responseString);
-        }
-
-    }
+    
     /**
      *删除群
      *//*
