@@ -174,43 +174,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void verifyServer(){
-        Thread thread =new Thread(new Runnable() {
-            @Override
-            public void run() {
-                User user=new User();
-                user.setId(-1);
-                user.setPhoneNumber(mUsernameEdit.getText().toString());
-                user.setPassword(mPassword.getText().toString());
-                user.setUserName("");
-                user.setGender(-1);
-                user.setCreateTime("");
-                user.setUpdateTime("");
-                user.setAge(-1);
-                user.setStudentId(mStudentNumber.getText().toString());
-                user.setOperation("register");
-                //boolean b = new AttendenceSystemClient(RegisterActivity.this).sendRegisterInfo(user);
-                if(true){
-                    //注册成功跳转到登陆
-                    Handler handlerThree=new Handler(Looper.getMainLooper());
-                    handlerThree.post(new Runnable(){
-                        public void run(){
-                            Toast.makeText(RegisterActivity.this, "恭喜你，注册成功 ！",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                }else {
-                    Handler handlerThree=new Handler(Looper.getMainLooper());
-                    handlerThree.post(new Runnable(){
-                        public void run(){
-                            Toast.makeText(RegisterActivity.this, "注册失败，请重新注册！",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    mPhoneVertifiEdit.setText(null);
-                }
-            }
-        });
-        thread.start();
+        User user=new User();
+        user.setId(-1);
+        user.setPhoneNumber(mUsernameEdit.getText().toString());
+        user.setPassword(mPassword.getText().toString());
+        user.setUserName("");
+        user.setGender(-1);
+        user.setCreateTime("");
+        user.setUpdateTime("");
+        user.setAge(-1);
+        user.setStudentId(mStudentNumber.getText().toString());
+        user.setOperation("register");
+
     }
 }

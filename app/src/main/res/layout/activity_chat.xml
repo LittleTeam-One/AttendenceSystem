@@ -46,14 +46,18 @@
             android:gravity="center"
             android:visibility="visible"/>
     </com.example.mrc.attendencesystem.control.CustomToolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_chat_log"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_layout"
         android:layout_width="match_parent"
         android:layout_height="437dp"
         android:layout_above="@+id/send_tools"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="4dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_chat_log"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/send_tools"

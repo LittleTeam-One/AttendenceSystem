@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -36,6 +38,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     RecyclerView mChatLogRecyclerView;
     Button mBtnSendMessage;
     LinearLayoutManager mLayoutManager;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ChatLogRecyclerViewAdapter mChatLogRecyclerViewAdapter;
     public static Context mContext;
     private SharedPreferences sp;
@@ -92,7 +95,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mEtSendMessage = (EditText)findViewById(R.id.et_send_message);
         mChatLogRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_chat_log);
         mBtnSendMessage = (Button)findViewById(R.id.btn_send_message);
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.sr_layout);
         root_view = (RelativeLayout) findViewById(R.id.root_view);
     }
 
@@ -128,6 +131,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         initListener();
         initOtherData();
     }
+
 
     @Override
     protected void onRestart() {
@@ -241,6 +245,31 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     //Toast.makeText(ChatActivity.this,"键盘落下",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 模拟刷新完成
+                new Handler().postDelayed(new Runnable() {
+
+                    /**
+                     *
+                     */
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        if(mData== null || mData.size() <=0){
+                            ClientUtil.getGroupChatRecord(phoneNumber, groupid,application ,-1);
+                        }else {
+                            ClientUtil.getGroupChatRecord(phoneNumber ,groupid,application ,(Integer) mData.get(mData.size()-1).get(4));
+                        }
+                    /*tv.setText("刷新完成");
+                    swipeRefreshLayout.setRefreshing(false);*/
+                    }
+                }, 6000);
             }
         });
     }
