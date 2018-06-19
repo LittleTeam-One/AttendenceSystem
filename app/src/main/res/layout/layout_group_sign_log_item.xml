@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:layout_margin="8dp">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_item_sign" />
+    <TextView
+        android:id="@+id/tv_start"
+        android:layout_toRightOf="@+id/img"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始时间："/>
+    <TextView
+        android:id="@+id/start_date_time"
+        android:layout_toRightOf="@+id/tv_start"
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2018年06月16号 星期六  10:45"/>
+    <TextView
+        android:id="@+id/tv_end"
+        android:layout_toRightOf="@+id/img"
+        android:layout_below="@+id/tv_start"
+        android:layout_marginLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束时间："/>
+    <TextView
+        android:id="@+id/end_date_time"
+        android:layout_toRightOf="@+id/tv_end"
+        android:layout_below="@+id/start_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2018年06月16号 星期六  12:20"/>
+    <ImageView
+        android:id="@+id/img_status"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/sign_remind"
+        android:scaleType="fitXY"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+    <View
+        android:layout_below="@+id/img"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.75dp"
+        android:background="@color/line_light_blue_color"/>
+</RelativeLayout>

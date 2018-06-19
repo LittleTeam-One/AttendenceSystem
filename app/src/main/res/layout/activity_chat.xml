@@ -37,11 +37,12 @@
 
         <ImageView
             android:id="@+id/img_information"
+            android:scaleType="fitXY"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
-            android:background="@drawable/icon_information"
+            android:src="@drawable/icon_information"
             android:gravity="center"
             android:visibility="visible"/>
     </com.example.mrc.attendencesystem.control.CustomToolbar>
@@ -50,16 +51,16 @@
         android:id="@+id/recyclerView_chat_log"
         android:layout_width="match_parent"
         android:layout_height="437dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/send_tools"
         android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="76dp"
         android:layout_marginTop="4dp" />
 
     <LinearLayout
         android:id="@+id/send_tools"
         android:layout_width="match_parent"
-        android:layout_height="76dp"
+        android:layout_height="48dp"
         android:layout_marginTop="4dp"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
@@ -95,7 +96,7 @@
                 android:textColor="@color/white"
                 android:clickable="false"/>
         </RelativeLayout>
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_gravity="center"
@@ -113,6 +114,6 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="16dp"
                 android:src="@drawable/ic_set_location"/>
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </RelativeLayout>

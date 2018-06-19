@@ -30,5 +30,9 @@ public enum TranObjectType {
 	GET_SIGN_RESPONSE,//获取签到的回应消息
 	GET_USER_SIGN_RECORD,//获取单个用户的签到记录
 	GET_GROUP_SIGN_RECORD,//获取群的签到记录
-	GET_GROUP_CHAT_RECORD,
+	GET_GROUP_MESSAGE,
+	SEND_GROUP_MESSAGE,  //普通消息或者发起签到的消息
+	GET_SINGLE_SIGNIN_RECORD,  //获取单一的签到记录
+	USER_SIGN_IN, //用户签到
+	GET_GROUP_ITEM,
 }

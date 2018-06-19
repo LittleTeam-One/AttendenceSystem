@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String version = String.format(getResources().getString(R.string.app_version), appVersion);
+        String version = getResources().getString(R.string.app_version);
         mAppVersion = version;
         mIcImage.setImageBitmap(CodeUtils.getInstance().createBitmap());
         mIcNumber = CodeUtils.getInstance().getCode();

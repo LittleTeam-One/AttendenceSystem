@@ -40,13 +40,11 @@ public class ClientInputThread extends Thread {
                 iReader = new InputStreamReader(inputStream, "UTF-8");
                 char[] buffer = new char[1024];
                 int count = 0;
-                StringBuffer sBuilder = new StringBuffer();
+                StringBuilder sBuilder = new StringBuilder();
                 while ((count = iReader.read(buffer,0,buffer.length))>-1) {
                     sBuilder.append(buffer,0,count);
-                    if(count<1024)
-                    {
+                    if(sBuilder.charAt(sBuilder.length() - 1) == '}')
                         break;
-                    }
                 }
                 mMessageListener.Message(sBuilder.toString());
             }

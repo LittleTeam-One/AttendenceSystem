@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class Group implements Serializable{
     //private static final long serialVersionUID = 11L;
-    String groupId;
+    int groupId;
     String groupName;
     String introdue;
     int adminId;
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
-    public String getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
@@ -35,5 +35,9 @@ public class Group implements Serializable{
 
     public void setAdminId(int adminId) {
         this.adminId = adminId;
+    }
+
+    public int getAdminId() {
+        return adminId;
     }
 }
