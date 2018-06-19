@@ -55,6 +55,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     public final static int CONTENT_TYPE = 2;
     public final static int CONTENT = 3;
     public final static int MESSAGE_ID = 4;
+    public static boolean reStart =false;
 
     /**
      * @param savedInstanceState
@@ -136,6 +137,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         super.onRestart();
         if(type == 1){   /*群聊*/
             mTvName.setText(groupName);
+            reStart =true;
             mImgInformation.setImageDrawable(getResources().getDrawable(R.drawable.ic_group_imformation));
             if(mData== null || mData.size() <=0){
                 ClientUtil.getGroupChatRecord(phoneNumber, groupid,application ,-1);
@@ -336,7 +338,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 case GET_GROUP_MESSAGE:
                     if(msg.isSuccess()){
                         ArrayList<GroupMessage> groupMessageArrayList = msg.getGroupMessageArrayList();
-
+                        if(reStart){
+                            mData.clear();
+                            reStart = false;
+                        }
                         for(int i = groupMessageArrayList.size()-1 ;i>=0;i--){
                             Map<Integer ,Object> map = new HashMap <Integer, Object>();
                             map.put(1,groupMessageArrayList.get(i).getFromId());
