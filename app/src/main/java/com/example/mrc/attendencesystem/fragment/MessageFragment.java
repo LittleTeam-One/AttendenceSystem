@@ -94,7 +94,7 @@ public class MessageFragment extends Fragment implements MessageRecyclerViewAdap
         mMessageRecyclerView.setLayoutManager(mLayoutManager);
         mMessageData.clear();
         MessageItem messageItem =new MessageItem();
-        messageItem.setSender("周玉欣");
+        messageItem.setSender("二愣子");
         messageItem.setContent("我要减肥!!!  ");
         messageItem.setLastTime("2018-05-30");
         MessageItem messageItem2 =new MessageItem();

@@ -1,8 +1,6 @@
 package com.example.mrc.attendencesystem.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.ActionBar;
@@ -22,9 +20,6 @@ import com.example.mrc.attendencesystem.entity.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -66,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         mSendVertiCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SMSSDK.registerEventHandler(new EventHandler(){
+                /*SMSSDK.registerEventHandler(new EventHandler(){
                     @Override
                     public void afterEvent(int i, int i1, Object o) {
                         super.afterEvent(i, i1, o);
@@ -88,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(mContext,getString(R.string.username_prompt),Toast.LENGTH_SHORT)
                             .show();
                 }
+            }*/
             }
         });
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +93,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String studentNumber = mStudentNumber.getText().toString();
                 String password = mPassword.getText().toString();
                 String againPassword = mAgainPassword.getText().toString();
+                mPhoneNumber = mUsernameEdit.getText().toString();
                 boolean inputIsOk = validateInput(mPhoneNumber,password,againPassword ,studentNumber);
                 String phoneVertifiCode = mPhoneVertifiEdit.getText().toString();
-                if(!TextUtils.isEmpty(phoneVertifiCode) && inputIsOk){
+                verifyServer();   //与服务端进行验证
+                /*if(!TextUtils.isEmpty(phoneVertifiCode) && inputIsOk){
                     SMSSDK.unregisterAllEventHandler();
                     SMSSDK.registerEventHandler(new EventHandler(){
                         @Override
@@ -115,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(mContext,getString(R.string.please_input_vertifi_code),Toast.LENGTH_SHORT)
                             .show();
                 }
-                SMSSDK.submitVerificationCode("86",mPhoneNumber,phoneVertifiCode);
+                SMSSDK.submitVerificationCode("86",mPhoneNumber,phoneVertifiCode);*/
             }
         });
     }
@@ -163,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SMSSDK.unregisterAllEventHandler();
+        //SMSSDK.unregisterAllEventHandler();
     }
 
     @Override

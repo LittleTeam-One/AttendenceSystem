@@ -6,7 +6,6 @@ import android.app.Application;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.mrc.attendencesystem.clientandserver.Client;
-import com.mob.MobApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Set;
  * Created by Mr.C on 2018/5/16.
  */
 
-public class AttendenceSystemApplication extends MobApplication {
+public class AttendenceSystemApplication extends Application {
     public static final String SHARED_PREF = "shared_preference";
     public static final String USER_ID = "user_id";
     public static final String USER_NAME = "user_name";
@@ -28,7 +27,7 @@ public class AttendenceSystemApplication extends MobApplication {
     private static Map<String, Activity> destroyMap = new HashMap<>();
     private boolean isClientStart;// 客户端连接是否启动
     private Client client;
-    private String ip = "192.168.1.119";//实验室ip
+    private String ip = "192.168.137.1";//实验室ip
     private int port = 5469;
     @Override
     public void onCreate() {

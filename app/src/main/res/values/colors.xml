@@ -27,6 +27,8 @@
     <color name="widget_dark_blue_color">#FF556A96</color>
     <color name="statusBar_color">#455a88</color>
     <color name="button_clicked_color">#BDBDBD</color>
+    <color name="bottom_tab_active">#0288D1</color>
+
 
     <dimen name="font_size_22sp">22sp</dimen>
     <dimen name="font_size_21sp">21sp</dimen>

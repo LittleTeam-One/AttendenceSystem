@@ -12,7 +12,7 @@ import com.example.mrc.attendencesystem.AttendenceSystem;
 import com.example.mrc.attendencesystem.entity.TranObject;
 
 public abstract class BaseFragment extends Fragment {
-    private ReceiveBroadCast receiveBroadCast;
+    private ReceiveBroadCast mReceiveBroadCast;
     class ReceiveBroadCast extends BroadcastReceiver
     {
         @Override
@@ -44,10 +44,10 @@ public abstract class BaseFragment extends Fragment {
     public void onStart(){
         /** 注册广播 */
         Log.d("BaseFragment:","registered");
-        receiveBroadCast = new ReceiveBroadCast();
+        mReceiveBroadCast = new ReceiveBroadCast();
         IntentFilter filter = new IntentFilter();
         filter.addAction(AttendenceSystem.ACTION);    //只有持有相同的action的接受者才能接收此广播
-        getActivity().registerReceiver(receiveBroadCast, filter);
+        getActivity().registerReceiver(mReceiveBroadCast, filter);
         super.onStart();
     }
     @Override
@@ -60,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         Log.d("BaseFragment:","unregistered");
-        getActivity().unregisterReceiver(receiveBroadCast);
+        getActivity().unregisterReceiver(mReceiveBroadCast);
         super.onDestroyView();
     }
 

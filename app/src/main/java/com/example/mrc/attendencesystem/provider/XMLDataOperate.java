@@ -4,7 +4,6 @@ import android.os.Environment;
 import android.util.Xml;
 
 import com.example.mrc.attendencesystem.entity.MessageItem;
-import com.mob.wrappers.UMSSDKWrapper;
 
 import org.xmlpull.v1.XmlSerializer;
 

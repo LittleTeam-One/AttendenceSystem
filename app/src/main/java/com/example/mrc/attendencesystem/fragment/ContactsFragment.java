@@ -136,7 +136,7 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
                 startActivity(intentToAddFriendsAndGroups);
                 break;
             case R.id.ll_create_group:
-                Intent intentToCreateGroups =new Intent(mContext , CreateGroupsActivity.class);
+                Intent intentToCreateGroups = new Intent(mContext , CreateGroupsActivity.class);
                 startActivity(intentToCreateGroups);
                 break;
             case R.id.ll_friends:
@@ -160,12 +160,6 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
                     ClientUtil.getGroups(sp.getString(AttendenceSystemApplication.USER_PHONE,""),application);
                 }
                 break;
-            /*case R.id.recyclerView_friends:
-
-                break;
-            case R.id.recyclerView_groups:
-
-                break;*/
             case R.id.img_search_box:
                 Intent intentToSearch =new Intent(mContext , SearchFriendsAndGroupActivity.class);
                 startActivity(intentToSearch);
