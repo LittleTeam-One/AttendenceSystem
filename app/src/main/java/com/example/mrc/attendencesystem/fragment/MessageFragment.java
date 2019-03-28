@@ -93,16 +93,14 @@ public class MessageFragment extends Fragment implements MessageRecyclerViewAdap
         mLayoutManager = new LinearLayoutManager(mContext);
         mMessageRecyclerView.setLayoutManager(mLayoutManager);
         mMessageData.clear();
-        MessageItem messageItem =new MessageItem();
-        messageItem.setSender("周玉欣");
-        messageItem.setContent("我要减肥!!!  ");
-        messageItem.setLastTime("2018-05-30");
-        MessageItem messageItem2 =new MessageItem();
-        messageItem.setSender("陈狗蛋");
-        messageItem.setContent("急啊哈哈!!!  ");
-        messageItem.setLastTime("2018-05-30");
-        messageItem.setImgSrc("");
-        mMessageData.add(messageItem2);
+        for(int i = 1;i <= 15 ;i++){
+            MessageItem messageItem =new MessageItem();
+            messageItem.setSender("周玉欣"+i);
+            messageItem.setContent("我要减肥!!!  "+i);
+            messageItem.setLastTime("2018-05-"+i);
+            messageItem.setImgSrc("");
+            mMessageData.add(messageItem);
+        }
         mMessageRecyclerViewAdapter = new MessageRecyclerViewAdapter(mContext , mMessageData);
         mMessageRecyclerViewAdapter.setOnItemClickListener(this);
         mMessageRecyclerViewAdapter.setOnItemLongClickListener(this);

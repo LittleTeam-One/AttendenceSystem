@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -37,7 +36,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     RecyclerView mChatLogRecyclerView;
     Button mBtnSendMessage;
     LinearLayoutManager mLayoutManager;
-    SwipeRefreshLayout mSwipeRefreshLayout;
     ChatLogRecyclerViewAdapter mChatLogRecyclerViewAdapter;
     public static Context mContext;
     private SharedPreferences sp;
@@ -55,7 +53,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     public final static int CONTENT_TYPE = 2;
     public final static int CONTENT = 3;
     public final static int MESSAGE_ID = 4;
-    public static boolean reStart =false;
 
     /**
      * @param savedInstanceState
@@ -90,7 +87,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         mImgInformation = (ImageView) findViewById(R.id.img_information);
         /*mImgLocation = (ImageView)findViewById(R.id.img_location);
         mImgSetLocation = (ImageView)findViewById(R.id.img_set_location);*/
-        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.sr_layout);
+
         mTvName = (TextView)findViewById(R.id.tv_name);
         mEtSendMessage = (EditText)findViewById(R.id.et_send_message);
         mChatLogRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_chat_log);
@@ -137,7 +134,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         super.onRestart();
         if(type == 1){   /*群聊*/
             mTvName.setText(groupName);
-            reStart =true;
             mImgInformation.setImageDrawable(getResources().getDrawable(R.drawable.ic_group_imformation));
             if(mData== null || mData.size() <=0){
                 ClientUtil.getGroupChatRecord(phoneNumber, groupid,application ,-1);
@@ -247,17 +243,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 }
             }
         });
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(mData == null || mData.size() <=0){
-                    ClientUtil.getGroupChatRecord(phoneNumber, groupid,application ,-1);
-                }else {
-                    ClientUtil.getGroupChatRecord(phoneNumber ,groupid,application ,(Integer) mData.get(mData.size()-1).get(4));
-                }
-            }
-        });
     }
     private void initOtherData() {
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -283,7 +268,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemClick(View itemView, int position) {
         //只有签到才能点击进入签到
-        if(adminId.equals(phoneNumber)){
+        if(phoneNumber == mData.get(position).get(1)){
             Intent intent1 = new Intent(ChatActivity.this ,GetSignMessageActivity.class);
             intent1.putExtra("phoneNumber" ,phoneNumber);
             intent1.putExtra("groupId" ,groupid);
@@ -338,10 +323,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                 case GET_GROUP_MESSAGE:
                     if(msg.isSuccess()){
                         ArrayList<GroupMessage> groupMessageArrayList = msg.getGroupMessageArrayList();
-                        if(reStart){
-                            mData.clear();
-                            reStart = false;
-                        }
+
                         for(int i = groupMessageArrayList.size()-1 ;i>=0;i--){
                             Map<Integer ,Object> map = new HashMap <Integer, Object>();
                             map.put(1,groupMessageArrayList.get(i).getFromId());
@@ -352,7 +334,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                         }
                         mChatLogRecyclerViewAdapter.notifyDataSetChanged();
                         scrollToLastItem();
-                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                     break;
                 /*发送聊天记录给服务器端*/

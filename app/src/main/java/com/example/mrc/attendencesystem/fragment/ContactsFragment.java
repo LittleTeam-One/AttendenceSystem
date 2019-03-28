@@ -102,16 +102,13 @@ public class ContactsFragment extends BaseFragment implements View.OnClickListen
         mGroupsLinearLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerViewGroups.setLayoutManager(mGroupsLinearLayoutManager);
         mFriendsData.clear();
-        FriendsItem friendsItem1 =new FriendsItem();
-        friendsItem1.setUsername("陈狗蛋儿");
-        friendsItem1.setOnlineStatus("在线");
-        friendsItem1.setImgSrc("");
-        mFriendsData.add(friendsItem1);
-        FriendsItem friendsItem2 =new FriendsItem();
-        friendsItem2.setUsername("二愣子");
-        friendsItem2.setOnlineStatus("在线");
-        friendsItem2.setImgSrc("");
-        mFriendsData.add(friendsItem2);
+        for(int i = 1;i <= 15 ;i++){
+            FriendsItem friendsItem =new FriendsItem();
+            friendsItem.setUsername("周玉欣"+i);
+            friendsItem.setOnlineStatus("在线");
+            friendsItem.setImgSrc("");
+            mFriendsData.add(friendsItem);
+        }
 
         //mGroupsData = initGroupsList(mPhoneNumber);
         mGroupsRecyclerViewAdapter = new GroupsRecyclerViewAdapter(mContext , mGroupsData);

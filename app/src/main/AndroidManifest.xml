@@ -35,13 +35,13 @@
         android:theme="@style/AppTheme">
 
         //笔记本上的
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="O7DS7rFPuqsVGlGloVfP4rXxrkRrdHKX" />
-        //台式机上的
         <!--<meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="op5LIoAK7Iplqvl1x8YBdTm6EWcbfVEG" />-->
+            android:value="O7DS7rFPuqsVGlGloVfP4rXxrkRrdHKX" />-->
+        //台式机上的
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="op5LIoAK7Iplqvl1x8YBdTm6EWcbfVEG" />
 
         <activity
             android:name=".activity.LaunchActivity"
