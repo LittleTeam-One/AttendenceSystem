@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.example.mrc.attendencesystem.activity.ResetPwdActivity">
+    tools:context="com.example.mrc.campus_social.activity.ResetPwdActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

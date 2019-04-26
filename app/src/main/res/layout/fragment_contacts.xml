@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-        <com.example.mrc.attendencesystem.control.CustomToolbar
+        <com.example.mrc.campus_social.buildlayout.CustomToolbar
             android:id="@+id/simple_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 android:background="@drawable/ic_more"
                 android:gravity="center"
                 android:visibility="visible"/>
-        </com.example.mrc.attendencesystem.control.CustomToolbar>
+        </com.example.mrc.campus_social.buildlayout.CustomToolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

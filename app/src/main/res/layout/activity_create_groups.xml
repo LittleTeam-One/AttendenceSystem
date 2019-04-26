@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.mrc.attendencesystem.activity.CreateGroupsActivity">
+    tools:context="com.example.mrc.campus_social.activity.CreateGroupsActivity">
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="48dp"

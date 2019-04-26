@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+    <TextView
+        android:id="@+id/like"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_16sp"
+        android:drawableLeft="@drawable/ic_liked"
+        android:drawablePadding="8dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="小红；香茗；小明；小新" />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/like"
+        android:layout_marginTop="12dp"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:text="所有评论（5）" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_height="1.25dp"
+        android:background="@color/line_light_blue_color"
+        android:layout_below="@+id/title" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/content"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

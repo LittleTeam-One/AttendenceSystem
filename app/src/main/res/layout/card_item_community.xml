@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_16sp"
+        android:ellipsize="end"
+        android:textColor="@color/font_color_more_light_black"
+        android:maxLines="1"
+        android:text="奔驰女回复：居然有人说这是炒作" />
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/title"
+        android:textSize="@dimen/font_size_13sp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="“根据国家三包，你这个车只能换发动机。但是由于我们对您是同情的感情在里面，我们同意给您退款”。14日，西安奔驰维权事件的当事人在微头条上表示，13日沟通中，奔驰代表说的这句话深深伤害了她的自尊，之后不会再跟利之星奔驰有任何非官方接触。同时，她还称受到了很多威胁，有些人每天发短信来骂她。" />
+
+    <LinearLayout
+        android:id="@+id/author"
+        android:orientation="horizontal"
+        android:layout_below="@+id/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_head_icon"/>
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginLeft="4dp"
+            android:text="肖斌"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/operation"
+            android:orientation="horizontal"
+            android:layout_below="@+id/sub_title"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp">
+            <ImageView
+                android:id="@+id/ic_like"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_like" />
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_marginLeft="4dp"
+                android:text="10"
+                android:textColor="#cdcdcd" />
+            <ImageView
+                android:id="@+id/ic_comment"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_comment_dark" />
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_marginLeft="4dp"
+                android:text="10"
+                android:textColor="#cdcdcd" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="0.75dp"
+        android:background="@color/line_light_blue_color" />
+</RelativeLayout>

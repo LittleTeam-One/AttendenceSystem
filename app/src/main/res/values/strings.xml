@@ -7,8 +7,8 @@
     <string name="register">注册</string>
     <string name="username_prompt">请输入正确格式的手机号</string>
     <string name="please_input_vertifi_code">请输入验证码</string>
-    <string name="app_name">基于定位的考勤系统</string>
-    <string name="full_name">基于定位的考勤系统</string>
+    <string name="app_name">校园社交</string>
+    <string name="full_name">校园社交</string>
     <string name="please_input_username">请输入您的用户名</string>
     <string name="please_input_password">请输入您的密码</string>
     <string name="login">登录</string>

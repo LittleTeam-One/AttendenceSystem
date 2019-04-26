@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp">
+
+    <TextView
+        android:id="@+id/hot_title"
+        android:textSize="@dimen/font_size_18sp"
+        android:textColor="@color/black"
+        android:text="热门帖"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_hot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/hot_title"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.25dp"
+        android:background="@color/line_light_blue_color" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hot_list"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:nestedScrollingEnabled="false"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/newest_title"
+        android:layout_below="@+id/hot_list"
+        android:textSize="@dimen/font_size_18sp"
+        android:textColor="@color/black"
+        android:text="最新帖"
+        android:drawablePadding="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_newest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_below="@+id/newest_title"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.25dp"
+        android:background="@color/line_light_blue_color" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/newest_list"
+        android:layout_below="@+id/line2"
+        android:layout_marginTop="4dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

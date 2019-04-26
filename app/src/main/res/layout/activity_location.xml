@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mrc.attendencesystem.activity.LocationActivity">
+    tools:context="com.example.mrc.campus_social.activity.LocationActivity">
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/map_view"

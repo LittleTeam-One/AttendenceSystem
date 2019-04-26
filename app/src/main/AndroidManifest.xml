@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mrc.attendencesystem">
+    package="com.example.mrc.campus_social">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--//获取设备网络状态，禁用后无法获取网络状态-->
@@ -26,9 +26,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".AttendenceSystemApplication"
+        android:name="com.example.mrc.campus_social.CampusSocialSystemApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/sign_in"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -44,7 +44,7 @@
             android:value="op5LIoAK7Iplqvl1x8YBdTm6EWcbfVEG" />
 
         <activity
-            android:name=".activity.LaunchActivity"
+            android:name="com.example.mrc.campus_social.activity.LaunchActivity"
             android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,32 +53,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name="com.example.mrc.campus_social.activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.example.mrc.campus_social.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Light.NoActionBar" />
-        <activity android:name=".activity.ForgetPwdActivity" />
-        <activity android:name=".activity.ResetPwdActivity" />
+        <activity android:name="com.example.mrc.campus_social.activity.ForgetPwdActivity" />
+        <activity android:name="com.example.mrc.campus_social.activity.ResetPwdActivity" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.example.mrc.campus_social.activity.MainActivity"
             android:theme="@style/Light.NoActionBar" />
 
         <service
-            android:name=".server.SocketConnectService"
+            android:name="com.example.mrc.campus_social.service.SocketConnectService"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".activity.SearchFriendsAndGroupActivity"
+            android:name="com.example.mrc.campus_social.activity.SearchFriendsAndGroupActivity"
             android:theme="@style/Light.NoActionBar" />
         <activity
-            android:name=".activity.AddFriendsOrGroupsActivity"
+            android:name="com.example.mrc.campus_social.activity.AddFriendsOrGroupsActivity"
             android:theme="@style/Light.NoActionBar" />
-        <activity android:name=".activity.CreateGroupsActivity" />
+        <activity android:name="com.example.mrc.campus_social.activity.CreateGroupsActivity" />
         <activity
-            android:name=".activity.LocationActivity"
+            android:name="com.example.mrc.campus_social.activity.LocationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Light.NoActionBar" />
@@ -89,17 +89,17 @@
             android:process=":remote" />
 
         <activity
-            android:name=".activity.ChatActivity"
+            android:name="com.example.mrc.campus_social.activity.ChatActivity"
             android:theme="@style/Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:launchMode="singleTask"/>
-        <activity android:name=".activity.GetSignMessageActivity"
+        <activity android:name="com.example.mrc.campus_social.activity.GetSignMessageActivity"
             android:label="签到记录"/>
-        <activity android:name=".activity.ToSignActivity"
+        <activity android:name="com.example.mrc.campus_social.activity.ToSignActivity"
             android:label="群内签到"/>
-        <activity android:name=".activity.SetSignActivity"
+        <activity android:name="com.example.mrc.campus_social.activity.SetSignActivity"
             android:label="发起签到设置"/>
-        <activity android:name=".activity.GroupInformationActivity"
+        <activity android:name="com.example.mrc.campus_social.activity.GroupInformationActivity"
             android:label="关于群组"></activity>
     </application>
 

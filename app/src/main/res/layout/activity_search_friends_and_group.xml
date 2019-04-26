@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.mrc.attendencesystem.activity.SearchFriendsAndGroupActivity">
+    tools:context="com.example.mrc.campus_social.activity.SearchFriendsAndGroupActivity">
     <com.arlib.floatingsearchview.FloatingSearchView
         android:backgroundTint="@color/white"
         android:id="@+id/search_view"

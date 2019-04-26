@@ -9,7 +9,7 @@ MobSDK {
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.mrc.attendencesystem"
+        applicationId "com.example.mrc.campus_social"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -53,4 +53,10 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     //noinspection GradleDependency
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //圆形图片
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    //banner
+    implementation 'com.youth.banner:banner:1.4.10'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }

@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/statusBar_color</item>
+        <item name="colorPrimaryDark">@color/bar_start_color</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="toolbarStyle">@style/toolbar</item>
@@ -22,7 +22,7 @@
     <style name="Light.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/statusBar_color</item>
+        <item name="colorPrimaryDark">@color/bar_start_color</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="toolbarStyle">@style/toolbar</item>
     </style>

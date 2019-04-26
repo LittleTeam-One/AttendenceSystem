@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_head_icon"/>
+    <LinearLayout
+        android:id="@+id/ll_author"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="小斌哥"/>
+        <TextView
+            android:id="@+id/date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_13sp"
+            android:text="2019.04.25"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/ll_author"
+        android:textSize="@dimen/font_size_16sp"
+        android:ellipsize="end"
+        android:maxLines="6"
+        android:text="         有人说一个人最大的成功在于他能以自己喜欢的方式过一生。但普通人的人生哪能如此地尽善尽美。普通的生活，有时候需要更多的往往是信念与坚持。
+         也曾向往银碗里的盛雪的月光，也曾想在海棠花里寻往昔，可生活终究充满了人间烟火，赠你一场花开，又泼你一场冷雨。山一程水一程的人生，不仅长路迢迢还血雨腥风。
+毕淑敏说：“无论这个世界对你怎样，都请你一如既往地努力，勇敢，充满希望。”世界或温柔，或残酷，路，总得走下去。当环境，当年龄，当一切硬性的东西不能改变时，也许，改变自己便是最好的途径了。" />
+
+    <LinearLayout
+        android:id="@+id/operation"
+        android:orientation="horizontal"
+        android:layout_below="@+id/sub_title"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="16dp" >
+        <ImageView
+            android:id="@+id/ic_like"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_like" />
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginLeft="4dp"
+            android:text="15"
+            android:textColor="#cdcdcd" />
+        <ImageView
+            android:id="@+id/ic_comment"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_comment_dark" />
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginLeft="4dp"
+            android:text="6"
+            android:textColor="#cdcdcd" />
+    </LinearLayout>
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/operation"
+        android:layout_width="match_parent"
+        android:layout_height="0.75dp"
+        android:background="@color/line_light_blue_color" />
+</RelativeLayout>

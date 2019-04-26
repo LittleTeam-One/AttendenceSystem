@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.mrc.attendencesystem.activity.GetSignMessageActivity">
+    tools:context="com.example.mrc.campus_social.activity.GetSignMessageActivity">
 
     <com.baidu.mapapi.map.MapView
         android:layout_margin="8dp"

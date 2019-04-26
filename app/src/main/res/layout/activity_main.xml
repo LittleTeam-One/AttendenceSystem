@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/Light.NoActionBar"
-    tools:context="com.example.mrc.attendencesystem.activity.MainActivity">
+    tools:context="com.example.mrc.campus_social.activity.MainActivity">
     <LinearLayout
         android:id="@+id/tb"
         android:layout_above="@+id/view_line"
@@ -19,8 +19,8 @@
         android:layout_above="@+id/bottom_navigation_bar"
         android:background="#e4e4e4"/>
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
-        android:layout_alignParentBottom="true"
         android:id="@+id/bottom_navigation_bar"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

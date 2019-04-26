@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.example.mrc.campus_social.buildlayout.CustomToolbar
+        android:id="@+id/simple_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"
+        android:fitsSystemWindows="true"
+        android:layout_alignParentTop="true"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+    <ImageView
+        android:id="@+id/img_left_send_post"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/ic_send_post"
+        android:scaleType="fitXY"
+        android:layout_gravity="left"
+        android:visibility="visible" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_title_mine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:singleLine="true"
+                android:text="我的星球"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:visibility="visible"/>
+
+            <TextView
+                android:id="@+id/tv_title_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:singleLine="true"
+                android:layout_marginLeft="16dp"
+                android:text="宇宙"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_right_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_comment"
+            android:gravity="center"
+            android:scaleType="fitXY"
+            android:visibility="visible"/>
+    </com.example.mrc.campus_social.buildlayout.CustomToolbar>
+    //我的星球页面
+    <com.example.mrc.campus_social.buildlayout.MoodMineLayout
+        android:id="@+id/layout_mine"
+        android:layout_below="@+id/simple_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.example.mrc.campus_social.buildlayout.MoodMineLayout>
+
+    //宇宙页面
+    <com.example.mrc.campus_social.buildlayout.MoodAllLayout
+        android:id="@+id/layout_all"
+        android:layout_below="@+id/simple_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.example.mrc.campus_social.buildlayout.MoodAllLayout>
+</RelativeLayout>

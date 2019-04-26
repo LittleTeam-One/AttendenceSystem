@@ -5,7 +5,7 @@
     android:orientation="vertical"
 
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.example.mrc.attendencesystem.control.CustomToolbar
+    <com.example.mrc.campus_social.buildlayout.CustomToolbar
         android:id="@+id/simple_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,14 +15,17 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_left_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="16dp"
-            android:background="@drawable/ic_head_icon"
-            android:gravity="center"
-            android:visibility="visible"/>
+            android:src="@drawable/ic_item_sign"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#BF2D2D"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/txt_main_title"
@@ -44,7 +47,7 @@
             android:src="@drawable/ic_more"
             android:gravity="center"
             android:visibility="visible"/>
-    </com.example.mrc.attendencesystem.control.CustomToolbar>
+    </com.example.mrc.campus_social.buildlayout.CustomToolbar>
 
     <LinearLayout
         android:id="@+id/ll_add_click"

@@ -19,7 +19,7 @@
         android:layout_marginLeft="16dp"
         android:layout_toEndOf="@+id/img_icon"
         android:layout_toRightOf="@+id/img_icon"
-        android:text="周玉欣"
+        android:text="小红"
         android:textColor="@color/font_color_more_light_black"
         android:textSize="@dimen/font_size_18sp" />
 

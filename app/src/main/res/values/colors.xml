@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#202020</color>
     <color name="simple_black">#FF202020</color>
@@ -18,14 +16,14 @@
     <color name="btn_background">#cdcdcd</color>
 
     <color name="white">#ffffff</color>
-    <color name="bar_dark_blue_color">#FF556995</color>
-    <color name="bar_light_blue_color">#FF5A7BC0</color>
+    <color name="bar_start_color">#4088EB</color>
+    <color name="bar_end_color">#00d2ff</color>
     <color name="font_color_light_black">#FF333333</color>
     <color name="line_light_blue_color">#FFE5E5E5</color>
     <color name="font_color_light_blue">#FFA0A0A0</color>
     <color name="font_color_more_light_black">#FF373737</color>
-    <color name="widget_dark_blue_color">#FF556A96</color>
-    <color name="statusBar_color">#455a88</color>
+    <color name="widget_dark_blue_color">#1fa2ff</color>
+    <color name="statusBar_color">#3B87F0</color>
     <color name="button_clicked_color">#BDBDBD</color>
     <color name="bottom_tab_active">#0288D1</color>
 

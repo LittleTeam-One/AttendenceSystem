@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginRight="84dp"
     android:padding="8dp">
     <TextView
         android:id="@+id/tv_others_name"
@@ -10,7 +11,7 @@
         android:layout_marginLeft="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="周玉欣"/>
+        android:text="小明"/>
     <LinearLayout
         android:padding="8dp"
         android:layout_below="@+id/tv_others_name"
@@ -25,11 +26,9 @@
             android:id="@+id/others_chat_log"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="这是周玉欣的聊天记录"
+            android:text="这是小明的聊天记录"
             android:textSize="@dimen/font_size_18sp"
             android:ellipsize="none"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
             android:maxLines="5"/>
     </LinearLayout>
     <ImageView
